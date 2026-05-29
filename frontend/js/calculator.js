@@ -7,10 +7,12 @@
  *   HR  Group:   offset + 4096 + (groupNum - 1) × 256
  *
  * Wzory (T-box Zone):
- *   IR urządzenia: offset + 320 + (pozycja_posortowana × 32)
- *   IR/HR strefy:  base_addr + (indeks_strefy × 16)
+ *   IR urządzenia:  offset + 320  + (pozycja_posortowana × 32)   // baza 0x0140
+ *   HR urządzenia:  offset + 8994 + (pozycja_posortowana × 32)   // baza 0x2322
+ *   IR/HR strefy:   base_addr + (indeks_strefy × 16)
  *
  * Rejestry sterownika mają stałe adresy (nie zależą od urządzenia).
+ * Źródło: T-BOX Zone Modbus RTU V4.8 (Flowair, wewnętrzna)
  */
 
 const Calculator = {
@@ -27,9 +29,14 @@ const Calculator = {
 
   // ---- T-box Zone ----
 
-  // Adres IR urządzenia: pozycja w liście posortowanej po adresie Modbus (0-based)
+  // Adres IR urządzenia: baza 0x0140 = 320
   calcZoneDeviceAddress(offset, sortedIndex) {
     return offset + 320 + sortedIndex * 32;
+  },
+
+  // Adres HR urządzenia (statyczna przestrzeń): baza 0x2322 = 8994
+  calcZoneDeviceHRAddress(offset, sortedIndex) {
+    return offset + 8994 + sortedIndex * 32;
   },
 
   // Adres rejestrów strefy
