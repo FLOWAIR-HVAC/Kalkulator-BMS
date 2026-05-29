@@ -3,11 +3,11 @@
   "description": "Destratyfikator (DRV D / LEO D)",
   "group_priority": 7,
   "input_registers": [
-    { "offset": 4, "name": "T3" },
-    { "offset": 5, "name": "T4" },
-    { "offset": 6, "name": "FanEff" },
-    { "offset": 7, "name": "DestStatus" },
-    { "offset": 8, "name": "FuseState" }
+    { "offset": 4, "name": "T3",         "description": "Temperatura przy suficie (czujnik T3)." },
+    { "offset": 5, "name": "T4",         "description": "Temperatura w pomieszczeniu (czujnik T4)." },
+    { "offset": 6, "name": "FanEff",     "description": "Prędkość wentylatora (AC 3-biegowy)." },
+    { "offset": 7, "name": "DestStatus", "description": "Stan destratyfikacji: aktywna gdy (DestTempRef > Td–Tm) oraz (Tz > Tm). Td=T3, Tm=TLeadVal lub T4." },
+    { "offset": 8, "name": "FuseState",  "description": "Stan bezpiecznika wentylatora 3V (bity 8–11). Przykład: 0x100 = OK, 0x200 = przepalony." }
   ],
   "holding_registers_single": [
     {
