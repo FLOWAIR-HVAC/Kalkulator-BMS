@@ -2391,5 +2391,62 @@ const DEVICES_DATA = {
         "unit": "%"
       }
     ]
+  },
+  "DRV AX": {
+    "name": "DRV AX",
+    "description": "Kurtyna powietrzna ELIS AX (wielobiegowe wentylatory EC)",
+    "group_priority": 4,
+    "input_registers": [
+      { "offset": 4,  "name": "T1",               "description": "Temperatura powietrza zewnętrznego (czujnik T1)." },
+      { "offset": 5,  "name": "T3",               "description": "Temperatura powietrza za wymiennikiem wodnym (czujnik T3)." },
+      { "offset": 6,  "name": "T4",               "description": "Temperatura w pomieszczeniu (czujnik T4)." },
+      { "offset": 7,  "name": "T5",               "description": "Temperatura wymiennika wodnego — rura powrotna (czujnik T5)." },
+      { "offset": 8,  "name": "CurtainState1",    "description": "Rejestr statusu sterownika — bity reprezentują aktywne funkcje i tryby pracy." },
+      { "offset": 9,  "name": "CurtainState2",    "description": "Rozszerzenie rejestru statusu sterownika." },
+      { "offset": 10, "name": "CurtainState3",    "description": "Rozszerzenie rejestru statusu sterownika." },
+      { "offset": 11, "name": "Fan1Speed",        "description": "Rzeczywista prędkość wentylatora nawiewnego 1 [RPM]." },
+      { "offset": 12, "name": "Fan2Speed",        "description": "Rzeczywista prędkość wentylatora nawiewnego 2 [RPM]." },
+      { "offset": 13, "name": "Fan3Speed",        "description": "Rzeczywista prędkość wentylatora nawiewnego 3 [RPM]." },
+      { "offset": 14, "name": "Fan4Speed",        "description": "Rzeczywista prędkość wentylatora nawiewnego 4 [RPM]." },
+      { "offset": 15, "name": "Fan5Speed",        "description": "Rzeczywista prędkość wentylatora nawiewnego 5 [RPM]." },
+      { "offset": 16, "name": "Fan6Speed",        "description": "Rzeczywista prędkość wentylatora nawiewnego 6 [RPM]." },
+      { "offset": 17, "name": "Fan7Speed",        "description": "Rzeczywista prędkość wentylatora nawiewnego 7 [RPM]." },
+      { "offset": 18, "name": "FilterWorkTime",   "description": "Czas pracy filtra. Czas rzeczywisty = 5 × wartość [min]." },
+      { "offset": 19, "name": "ValveRelaysState", "description": "Aktualny status zaworu na stykach VALVE_RELAYS (L1, L2). 0=otwarty, 1=zamknięty." },
+      { "offset": 20, "name": "Valve0-10State",   "description": "Aktualny status zaworu 0–10V." }
+    ],
+    "holding_registers_single": [
+      { "offset": 4,  "name": "WorkMode",                   "values": { "0": "OFF — urządzenie wyłączone", "1": "HEAT — tryb grzania", "2": "VENT — wentylacja", "3": "SMART — tryb automatyczny" } },
+      { "offset": 5,  "name": "FanWorkMode",                "values": { "0": "AUTO", "1": "MANUAL" }, "description": "Tryb pracy wentylatora. Domyślnie MANUAL." },
+      { "offset": 6,  "name": "Program",                    "description": "Program pracy kurtyny (K1, K2...). Domyślnie K1." },
+      { "offset": 7,  "name": "FWM_ManualHeatVentRef",      "min": 0, "max": 100, "unit": "%", "description": "Wydajność wentylatora w trybie MANUAL (HEAT lub VENT). Domyślnie 50%." },
+      { "offset": 8,  "name": "FWM_StandbyRef",             "min": 0, "max": 100, "unit": "%", "description": "Wydajność wentylatora w trybie STANDBY. Domyślnie 20%." },
+      { "offset": 9,  "name": "FWM_AutoHeatVentMin",        "min": 0, "max": 100, "unit": "%", "description": "Minimalna wydajność wentylatora w trybie AUTO (HEAT/VENT). Warunek: Min < Max. Domyślnie 0%." },
+      { "offset": 10, "name": "FWM_AutoHeatVentMax",        "min": 0, "max": 100, "unit": "%", "description": "Maksymalna wydajność wentylatora w trybie AUTO (HEAT/VENT). Warunek: Max > Min. Domyślnie 100%." },
+      { "offset": 11, "name": "EWM_HeatT3Ref",              "min": 0, "max": 999, "unit": "×0.1°C", "description": "Temperatura zadana nawiewu dla trybu grzania (HEAT). Domyślnie 320 = 32.0°C." },
+      { "offset": 12, "name": "EWM_HeatT5Max",              "min": 0, "max": 999, "unit": "×0.1°C", "description": "Ograniczenie temperatury wody powrotnej dla trybu grzania. Domyślnie 320 = 32.0°C." },
+      { "offset": 13, "name": "EWM_HeatT5LimitMode",        "values": { "1": "ON — aktywne", "2": "OFF — wyłączone" }, "description": "Włącz/wyłącz ograniczenie temperatury wody powrotnej. Domyślnie OFF." },
+      { "offset": 14, "name": "PreheatT5Ref",               "min": 0, "max": 999, "unit": "×0.1°C", "description": "Temperatura wody powrotnej po której włącza się wentylator (PREHEAT). Domyślnie 300 = 30.0°C." },
+      { "offset": 15, "name": "StandbyFanIdleDelay",        "min": 0, "max": 9999, "unit": "s", "description": "Opóźnienie pracy wentylatora w trybie STANDBY [s]. Domyślnie 300s. Warunek: ≥ StandbyValveIdleDelay." },
+      { "offset": 16, "name": "StandbyValveIdleDelay",      "min": 0, "max": 9999, "unit": "s", "description": "Opóźnienie pracy zaworu w trybie STANDBY [s]. Domyślnie 300s. Warunek: ≤ StandbyFanIdleDelay." },
+      { "offset": 17, "name": "AntifreezeWareHouseOn",      "values": { "1": "ON — aktywne", "2": "OFF — wyłączone" }, "description": "Ochrona przeciwzamrożeniowa magazynu. Domyślnie OFF." },
+      { "offset": 18, "name": "AntifreezeWareTempOn",       "min": 0, "max": 999, "unit": "×0.1°C", "description": "Temperatura progowa aktywacji ochrony przeciwzamrożeniowej magazynu. Domyślnie 70 = 7.0°C." },
+      { "offset": 19, "name": "AntifreezeWaterExchangeOn",  "values": { "1": "ON — aktywne", "2": "OFF — wyłączone" }, "description": "Ochrona przeciwzamrożeniowa wymiennika wodnego. Domyślnie ON." },
+      { "offset": 20, "name": "AntifreezeWaterExchangeT3",  "min": 0, "max": 999, "unit": "×0.1°C", "description": "Progowa temperatura nawiewu T3 dla aktywacji ochrony wymiennika. Domyślnie 70 = 7.0°C." },
+      { "offset": 21, "name": "AntifreezeWaterExchangeT5",  "min": 0, "max": 999, "unit": "×0.1°C", "description": "Progowa temperatura wody T5 dla aktywacji ochrony wymiennika. Domyślnie 70 = 7.0°C." },
+      { "offset": 22, "name": "PreheatOnOff",               "values": { "1": "ON", "2": "OFF" }, "description": "Włącz/wyłącz podgrzewanie wstępne (PREHEAT). Domyślnie OFF." },
+      { "offset": 23, "name": "FilterMaxWorkTime",          "description": "Kasowanie licznika czasu pracy filtra. Domyślnie OFF." },
+      { "offset": 24, "name": "DoorOpenFreqAlphaThreshold", "min": 0, "max": 100, "description": "Próg detekcji częstotliwości otwierania drzwi w trybie SMART. Domyślnie 60." },
+      { "offset": 25, "name": "DoorOpenFreqTimePeriod",     "unit": "s", "description": "Okres detekcji częstotliwości otwierania drzwi w trybie SMART. Domyślnie 300s." },
+      { "offset": 26, "name": "FWMAutoAddHeatMin",          "min": 0, "max": 100, "unit": "%", "description": "Minimalna wydajność wentylatora w trybie dogrzewania (ADD HEAT), Auto. Domyślnie 5%. Warunek: Min < Max." },
+      { "offset": 27, "name": "FWMAutoAddHeatMax",          "min": 0, "max": 100, "unit": "%", "description": "Maksymalna wydajność wentylatora w trybie dogrzewania (ADD HEAT), Auto. Domyślnie 5%. Warunek: Min < Max." },
+      { "offset": 28, "name": "EWMSmartT124h",              "min": 0, "max": 999, "unit": "×0.1°C", "description": "Temperatura zadana przejścia VENT→HEAT w trybie SMART. Domyślnie 170 = 17.0°C. Warunek: ≤ EWMSmartT13h − 1K." },
+      { "offset": 29, "name": "EWMSmartT13h",               "min": 0, "max": 999, "unit": "×0.1°C", "description": "Temperatura zadana przejścia HEAT→VENT w trybie SMART. Domyślnie 210 = 21.0°C. Warunek: ≥ EWMSmartT124h + 1K." },
+      { "offset": 30, "name": "HeatT3_PI_KP",               "description": "Wzmocnienie KP regulatora PI temperatury nawiewu T3. Domyślnie 3." },
+      { "offset": 31, "name": "HeatT3_PI_TI",               "unit": "s", "description": "Czas podwajania TI regulatora PI temperatury nawiewu T3. Domyślnie 180s." },
+      { "offset": 32, "name": "HeatT5_PI_KP",               "description": "Wzmocnienie KP regulatora PI temperatury wody powrotnej T5. Domyślnie 3." },
+      { "offset": 33, "name": "HeatT5_PI_TI",               "unit": "s", "description": "Czas TI regulatora PI temperatury wody powrotnej T5. Domyślnie 180s." }
+    ],
+    "holding_registers_group": []
   }
 };
