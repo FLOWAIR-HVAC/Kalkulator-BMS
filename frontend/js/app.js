@@ -244,6 +244,33 @@ function renderTboxZone(resultsEl, selectedDevices) {
       reg:     reg,
     });
 
+    // Rejestr nagłówkowy IR: SoftwareType (offset 0x01 w przestrzeni IR urządzenia)
+    const irHeader = [{
+      offset:  1,
+      addrDec: Calculator.calcZoneDeviceAddress(1, sortedIndex),
+      addrHex: Calculator.toHex(Calculator.calcZoneDeviceAddress(1, sortedIndex)),
+      name:    'SoftwareType',
+      reg:     { description: 'Typ oprogramowania urządzenia (identyfikator modelu)' },
+    }];
+
+    // Rejestry nagłówkowe HR: ZoneID i DeviceID (poprzedzają właściwe rejestry w bloku statycznym)
+    const hrHeader = [
+      {
+        offset:  null,
+        addrDec: 8992 + sortedIndex * 32,
+        addrHex: Calculator.toHex(8992 + sortedIndex * 32),
+        name:    'ZoneID',
+        reg:     { description: 'Identyfikator strefy przypisanej do tego urządzenia (1–31)' },
+      },
+      {
+        offset:  null,
+        addrDec: 8993 + sortedIndex * 32,
+        addrHex: Calculator.toHex(8993 + sortedIndex * 32),
+        name:    'DeviceID',
+        reg:     { description: 'Identyfikator typu urządzenia (software type, lista w rozdz. 2.1 dokumentacji)' },
+      },
+    ];
+
     const ir       = (device.input_registers          || []).map(mapIR);
     const hrSingle = (device.holding_registers_single || []).map(mapHR);
 
@@ -259,10 +286,10 @@ function renderTboxZone(resultsEl, selectedDevices) {
     block.appendChild(header);
 
     if (ir.length > 0) {
-      block.appendChild(buildRegSection('Input Registers (IR) — tylko odczyt', ir));
+      block.appendChild(buildRegSection('Input Registers (IR) — tylko odczyt', [...irHeader, ...ir]));
     }
     if (hrSingle.length > 0) {
-      block.appendChild(buildRegSection('Holding Registers (HR) — Single mode', hrSingle));
+      block.appendChild(buildRegSection('Holding Registers (HR) — Single mode', [...hrHeader, ...hrSingle]));
     }
     if (ir.length === 0 && hrSingle.length === 0) {
       const empty = document.createElement('div');
