@@ -557,6 +557,7 @@ const DEVICES_DATA = {
     "name": "DRV AX",
     "description": "Kurtyna powietrzna ELIS AX (wielobiegowe wentylatory EC)",
     "group_priority": 4,
+    "tbox_zone_only": true,
     "input_registers": [
       {
         "offset": 4,
@@ -2597,6 +2598,7 @@ const DEVICES_DATA = {
     "name": "DRV LUNA",
     "description": "Nagrzewnica LUNA",
     "group_priority": 14,
+    "tbox_zone_only": true,
     "input_registers": [
       {
         "offset": 5,

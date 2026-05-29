@@ -38,8 +38,10 @@ function updateFormForControllerType() {
 // ============================================================
 function addDeviceRow() {
   const id = ++deviceRowCount;
-  const names = Object.keys(devices).sort();
   const isTboxZone = document.getElementById('controllerType').value === 'tbox_zone';
+  const names = Object.keys(devices)
+    .filter(name => isTboxZone || !devices[name].tbox_zone_only)
+    .sort();
 
   const row = document.createElement('div');
   row.className = 'device-row';
