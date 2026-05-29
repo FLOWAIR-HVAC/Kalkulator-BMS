@@ -3,14 +3,14 @@
   "description": "Nagrzewnica wodna z wentylatorem EC",
   "group_priority": 5,
   "input_registers": [
-    { "offset": 4, "name": "T3" },
-    { "offset": 5, "name": "T4" },
-    { "offset": 6, "name": "FanEff" },
-    { "offset": 7, "name": "AntifreezeState" },
-    { "offset": 8, "name": "DestStatus" },
-    { "offset": 9, "name": "FanEcConnect" },
-    { "offset": 10, "name": "FuseState" },
-    { "offset": 11, "name": "ValveState" }
+    { "offset": 4,  "name": "T3",                  "description": "Temperatura przy suficie (czujnik T3)." },
+    { "offset": 5,  "name": "T4",                  "description": "Temperatura w pomieszczeniu (czujnik T4)." },
+    { "offset": 6,  "name": "FanEff",              "description": "Prędkość wentylatora (AC 3-biegowy)." },
+    { "offset": 7,  "name": "AntifreezeeState",    "description": "Stan ochrony przeciwzamrożeniowej magazynu — 8 bitów." },
+    { "offset": 8,  "name": "DestStatus",          "description": "Stan destratyfikacji: aktywna gdy (DestTempRef > Td–Tm) oraz (Tz > Tm)." },
+    { "offset": 9,  "name": "FilterPressureState", "description": "Stan presostatu filtra." },
+    { "offset": 10, "name": "FuseState",           "description": "Stan bezpiecznika wentylatorów (bity). Przykład: 0x100 = OK, 0x200 = przepalony." },
+    { "offset": 11, "name": "ValveState",          "description": "Stan zaworu wodnego." }
   ],
   "holding_registers_single": [
     {
