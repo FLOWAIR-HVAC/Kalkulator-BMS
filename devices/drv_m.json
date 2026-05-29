@@ -3,14 +3,14 @@
   "description": "Nagrzewnica wodna z wentylatorem EC (płynna regulacja)",
   "group_priority": 6,
   "input_registers": [
-    { "offset": 4, "name": "T3" },
-    { "offset": 5, "name": "T4" },
-    { "offset": 6, "name": "FanEff" },
-    { "offset": 7, "name": "AntifreezeState" },
-    { "offset": 8, "name": "DestStatus" },
-    { "offset": 9, "name": "FanEcConnect" },
-    { "offset": 10, "name": "FuseState" },
-    { "offset": 11, "name": "ValveState" }
+    { "offset": 4,  "name": "T3",               "description": "Temperatura powietrza za wymiennikiem wodnym (czujnik T3)." },
+    { "offset": 5,  "name": "T4",               "description": "Temperatura w pomieszczeniu (czujnik T4)." },
+    { "offset": 6,  "name": "FanEff",           "description": "Wydajność wentylatora EC — prędkość obrotowa [rpm]." },
+    { "offset": 7,  "name": "AntifreezeeState", "description": "Stan ochrony przeciwzamrożeniowej — 8 bitów." },
+    { "offset": 8,  "name": "DestStatus",       "description": "Stan destratyfikacji: aktywna gdy (DestTempRef > Td–Tm) oraz (Tz > Tm)." },
+    { "offset": 9,  "name": "FanEcConnect",     "description": "Status połączenia wentylatora EC z urządzeniem DRV M." },
+    { "offset": 10, "name": "FuseState",        "description": "Stan bezpiecznika wentylatorów EC/3V/dachowych (bity). Przykład: 0x100 = wentylator 3V OK." },
+    { "offset": 11, "name": "ValveState",       "description": "Stan zaworu wodnego." }
   ],
   "holding_registers_single": [
     {
