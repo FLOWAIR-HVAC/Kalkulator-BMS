@@ -2,6 +2,7 @@
   "name": "DRV AX",
   "description": "Kurtyna powietrzna ELIS AX (wielobiegowe wentylatory EC)",
   "group_priority": 4,
+  "tbox_zone_only": true,
   "input_registers": [
     { "offset": 4,  "name": "T1",               "description": "Temperatura powietrza zewnętrznego (czujnik T1)." },
     { "offset": 5,  "name": "T3",               "description": "Temperatura powietrza za wymiennikiem wodnym (czujnik T3)." },
