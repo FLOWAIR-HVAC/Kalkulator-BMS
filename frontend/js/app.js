@@ -229,15 +229,13 @@ function renderTboxZone(resultsEl, selectedDevices) {
     const device = devices[name];
     if (!device) return;
 
-    const ir = (device.input_registers || []).map(reg => {
+    const mapZoneReg = (reg) => {
       const addrDec = Calculator.calcZoneDeviceAddress(reg.offset, sortedIndex);
-      return {
-        addrDec,
-        addrHex: Calculator.toHex(addrDec),
-        name:    reg.name,
-        reg:     reg,
-      };
-    });
+      return { addrDec, addrHex: Calculator.toHex(addrDec), name: reg.name, reg };
+    };
+
+    const ir       = (device.input_registers          || []).map(mapZoneReg);
+    const hrSingle = (device.holding_registers_single || []).map(mapZoneReg);
 
     const block = document.createElement('div');
     block.className = 'result-block';
@@ -252,10 +250,14 @@ function renderTboxZone(resultsEl, selectedDevices) {
 
     if (ir.length > 0) {
       block.appendChild(buildRegSection('Input Registers (IR) — tylko odczyt', ir));
-    } else {
+    }
+    if (hrSingle.length > 0) {
+      block.appendChild(buildRegSection('Holding Registers (HR) — Single mode', hrSingle));
+    }
+    if (ir.length === 0 && hrSingle.length === 0) {
       const empty = document.createElement('div');
       empty.className = 'empty-note';
-      empty.textContent = 'Brak rejestrów wejściowych dla tego urządzenia.';
+      empty.textContent = 'Brak rejestrów dla tego urządzenia.';
       block.appendChild(empty);
     }
 
