@@ -1,7 +1,7 @@
 {
   "name": "DRV OXEN",
   "description": "Rekuperator OXEN",
-  "group_priority": 8,
+  "group_priority": 1,
   "input_registers": [
     {
       "offset": 0,
