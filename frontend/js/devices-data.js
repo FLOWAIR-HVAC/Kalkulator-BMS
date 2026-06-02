@@ -1,4 +1,166 @@
 const DEVICES_DATA = {
+  "DRV OXEN": {
+    "name": "DRV OXEN",
+    "description": "Rekuperator OXEN",
+    "group_priority": 1,
+    "input_registers": [
+      {
+        "offset": 0,
+        "name": "Status1",
+        "description": "Rejestr statusu nr 1 (bitowy)."
+      },
+      {
+        "offset": 2,
+        "name": "T1",
+        "description": "Temperatura powietrza nawiewanego (czujnik T1)."
+      },
+      {
+        "offset": 3,
+        "name": "T2",
+        "description": "Temperatura powietrza przy wentylatorze wyciągowym (czujnik T2)."
+      },
+      {
+        "offset": 4,
+        "name": "T3",
+        "description": "Temperatura powietrza za wymiennikiem wodnym (czujnik T3)."
+      },
+      {
+        "offset": 5,
+        "name": "T4",
+        "description": "Temperatura powietrza powrotnego / pomieszczenia (czujnik T4)."
+      },
+      {
+        "offset": 6,
+        "name": "T5",
+        "description": "Temperatura wymiennika wodnego (czujnik T5)."
+      },
+      {
+        "offset": 7,
+        "name": "Outputs",
+        "description": "Stan wyjść sterownika."
+      },
+      {
+        "offset": 8,
+        "name": "Inputs",
+        "description": "Stan wejść sterownika (wejścia beznap. i przełączniki)."
+      },
+      {
+        "offset": 9,
+        "name": "FilterWorkTime",
+        "description": "Czas pracy filtra."
+      },
+      {
+        "offset": 10,
+        "name": "FansEff_1",
+        "description": "Wydajność wentylatorów grupy I — nawiew [%]."
+      },
+      {
+        "offset": 11,
+        "name": "FansEff_2",
+        "description": "Wydajność wentylatorów grupy II — wyciąg [%]."
+      }
+    ],
+    "holding_registers_single": [
+      {
+        "offset": 0,
+        "name": "Config1",
+        "description": "Bit 0: FilterWorkTimeRST — 0=brak akcji, 1=reset licznika czasu filtra (ustawia adres 0x09 na 0x000)"
+      },
+      {
+        "offset": 2,
+        "name": "FanEffRef_1",
+        "min": 0,
+        "max": 100,
+        "unit": "%",
+        "description": "Wentylator EC — wentylatory nawiewne (grupa I), płynna regulacja 0–100%"
+      },
+      {
+        "offset": 3,
+        "name": "FanEffRef_2",
+        "min": 0,
+        "max": 100,
+        "unit": "%",
+        "description": "Wentylator EC — wentylatory wywiewne (grupa II), płynna regulacja 0–100%"
+      },
+      {
+        "offset": 4,
+        "name": "OxenState",
+        "values": {
+          "0": "OX_OFF — wyłączony",
+          "1": "OX_ON — włączony",
+          "2": "OX_ON — włączony",
+          "3": "OX_ON — włączony"
+        }
+      },
+      {
+        "offset": 5,
+        "name": "OxenMode",
+        "values": {
+          "0": "OXEN_MD_AUTO — automatyczny (automatyczna regulacja bypass)",
+          "1": "OXEN_MD_WINTER — tryb zimowy (bypass wyłączony)",
+          "2": "OXEN_MD_SUMMER — tryb letni (bypass włączony)"
+        }
+      },
+      {
+        "offset": 6,
+        "name": "TempRef",
+        "min": 50,
+        "max": 450,
+        "unit": "°C×0.1"
+      },
+      {
+        "offset": 7,
+        "name": "TLeadVal",
+        "min": -500,
+        "max": 1500,
+        "unit": "°C×0.1"
+      },
+      {
+        "offset": 12,
+        "name": "TleadSensorSelect",
+        "values": {
+          "0": "T_NS — tylko odczyt",
+          "1": "T_LEAD — wartość przez Modbus (TLeadVal)",
+          "2": "TSL_T3 — czujnik T3 (złącze DRV)",
+          "3": "TSL_T4 — czujnik T4 (złącze DRV)"
+        }
+      }
+    ],
+    "holding_registers_group": [
+      {
+        "offset": 2,
+        "name": "FanEffRef_1",
+        "min": 0,
+        "max": 100,
+        "unit": "%",
+        "description": "Wentylator EC — wentylatory nawiewne (grupa I), płynna regulacja 0–100%"
+      },
+      {
+        "offset": 3,
+        "name": "FanEffRef_2",
+        "min": 0,
+        "max": 100,
+        "unit": "%",
+        "description": "Wentylator EC — wentylatory wywiewne (grupa II), płynna regulacja 0–100%"
+      },
+      {
+        "offset": 5,
+        "name": "OxenMode",
+        "values": {
+          "0": "OXEN_MD_AUTO — automatyczny (automatyczna regulacja bypass)",
+          "1": "OXEN_MD_WINTER — tryb zimowy (bypass wyłączony)",
+          "2": "OXEN_MD_SUMMER — tryb letni (bypass włączony)"
+        }
+      },
+      {
+        "offset": 6,
+        "name": "TempRef",
+        "min": 50,
+        "max": 450,
+        "unit": "°C×0.1"
+      }
+    ]
+  },
   "DRV KM": {
     "name": "DRV KM",
     "description": "Centrala wentylacyjna z klapą mieszającą",
@@ -1441,168 +1603,6 @@ const DEVICES_DATA = {
       }
     ]
   },
-  "DRV OXEN": {
-    "name": "DRV OXEN",
-    "description": "Rekuperator OXEN",
-    "group_priority": 8,
-    "input_registers": [
-      {
-        "offset": 0,
-        "name": "Status1",
-        "description": "Rejestr statusu nr 1 (bitowy)."
-      },
-      {
-        "offset": 2,
-        "name": "T1",
-        "description": "Temperatura powietrza nawiewanego (czujnik T1)."
-      },
-      {
-        "offset": 3,
-        "name": "T2",
-        "description": "Temperatura powietrza przy wentylatorze wyciągowym (czujnik T2)."
-      },
-      {
-        "offset": 4,
-        "name": "T3",
-        "description": "Temperatura powietrza za wymiennikiem wodnym (czujnik T3)."
-      },
-      {
-        "offset": 5,
-        "name": "T4",
-        "description": "Temperatura powietrza powrotnego / pomieszczenia (czujnik T4)."
-      },
-      {
-        "offset": 6,
-        "name": "T5",
-        "description": "Temperatura wymiennika wodnego (czujnik T5)."
-      },
-      {
-        "offset": 7,
-        "name": "Outputs",
-        "description": "Stan wyjść sterownika."
-      },
-      {
-        "offset": 8,
-        "name": "Inputs",
-        "description": "Stan wejść sterownika (wejścia beznap. i przełączniki)."
-      },
-      {
-        "offset": 9,
-        "name": "FilterWorkTime",
-        "description": "Czas pracy filtra."
-      },
-      {
-        "offset": 10,
-        "name": "FansEff_1",
-        "description": "Wydajność wentylatorów grupy I — nawiew [%]."
-      },
-      {
-        "offset": 11,
-        "name": "FansEff_2",
-        "description": "Wydajność wentylatorów grupy II — wyciąg [%]."
-      }
-    ],
-    "holding_registers_single": [
-      {
-        "offset": 0,
-        "name": "Config1",
-        "description": "Bit 0: FilterWorkTimeRST — 0=brak akcji, 1=reset licznika czasu filtra (ustawia adres 0x09 na 0x000)"
-      },
-      {
-        "offset": 2,
-        "name": "FanEffRef_1",
-        "min": 0,
-        "max": 100,
-        "unit": "%",
-        "description": "Wentylator EC — wentylatory nawiewne (grupa I), płynna regulacja 0–100%"
-      },
-      {
-        "offset": 3,
-        "name": "FanEffRef_2",
-        "min": 0,
-        "max": 100,
-        "unit": "%",
-        "description": "Wentylator EC — wentylatory wywiewne (grupa II), płynna regulacja 0–100%"
-      },
-      {
-        "offset": 4,
-        "name": "OxenState",
-        "values": {
-          "0": "OX_OFF — wyłączony",
-          "1": "OX_ON — włączony",
-          "2": "OX_ON — włączony",
-          "3": "OX_ON — włączony"
-        }
-      },
-      {
-        "offset": 5,
-        "name": "OxenMode",
-        "values": {
-          "0": "OXEN_MD_AUTO — automatyczny (automatyczna regulacja bypass)",
-          "1": "OXEN_MD_WINTER — tryb zimowy (bypass wyłączony)",
-          "2": "OXEN_MD_SUMMER — tryb letni (bypass włączony)"
-        }
-      },
-      {
-        "offset": 6,
-        "name": "TempRef",
-        "min": 50,
-        "max": 450,
-        "unit": "°C×0.1"
-      },
-      {
-        "offset": 7,
-        "name": "TLeadVal",
-        "min": -500,
-        "max": 1500,
-        "unit": "°C×0.1"
-      },
-      {
-        "offset": 12,
-        "name": "TleadSensorSelect",
-        "values": {
-          "0": "T_NS — tylko odczyt",
-          "1": "T_LEAD — wartość przez Modbus (TLeadVal)",
-          "2": "TSL_T3 — czujnik T3 (złącze DRV)",
-          "3": "TSL_T4 — czujnik T4 (złącze DRV)"
-        }
-      }
-    ],
-    "holding_registers_group": [
-      {
-        "offset": 2,
-        "name": "FanEffRef_1",
-        "min": 0,
-        "max": 100,
-        "unit": "%",
-        "description": "Wentylator EC — wentylatory nawiewne (grupa I), płynna regulacja 0–100%"
-      },
-      {
-        "offset": 3,
-        "name": "FanEffRef_2",
-        "min": 0,
-        "max": 100,
-        "unit": "%",
-        "description": "Wentylator EC — wentylatory wywiewne (grupa II), płynna regulacja 0–100%"
-      },
-      {
-        "offset": 5,
-        "name": "OxenMode",
-        "values": {
-          "0": "OXEN_MD_AUTO — automatyczny (automatyczna regulacja bypass)",
-          "1": "OXEN_MD_WINTER — tryb zimowy (bypass wyłączony)",
-          "2": "OXEN_MD_SUMMER — tryb letni (bypass włączony)"
-        }
-      },
-      {
-        "offset": 6,
-        "name": "TempRef",
-        "min": 50,
-        "max": 450,
-        "unit": "°C×0.1"
-      }
-    ]
-  },
   "DRV EL": {
     "name": "DRV EL",
     "description": "Nagrzewnica elektryczna",
@@ -2246,11 +2246,6 @@ const DEVICES_DATA = {
     "description": "Nagrzewnica/chłodnica wodna",
     "group_priority": 12,
     "input_registers": [
-      {
-        "offset": 4,
-        "name": "T3",
-        "description": "Temperatura przy suficie (czujnik T3)."
-      },
       {
         "offset": 5,
         "name": "T4",

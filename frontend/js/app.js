@@ -178,6 +178,7 @@ function renderTbox(resultsEl, selectedDevices, mode) {
   const selectedNames = selectedDevices.map(d => d.name);
   const groupMap = Calculator.assignGroupNumbers(selectedNames, devices);
 
+  // Blok urządzenia: IR dla każdego adresu + HR Single tylko w trybie single
   selectedDevices.forEach(({ name, addr }) => {
     const device = devices[name];
     if (!device) return;
@@ -200,21 +201,44 @@ function renderTbox(resultsEl, selectedDevices, mode) {
       block.appendChild(buildRegSection('Input Registers (IR) — tylko odczyt', tables.ir));
     }
 
-    if (mode === 'single') {
-      if (tables.hrSingle.length > 0) {
-        block.appendChild(buildRegSection('Holding Registers (HR) — Single mode', tables.hrSingle));
-      }
-    } else {
-      if (tables.hrSingle.length > 0) {
-        block.appendChild(buildRegSection('Holding Registers — Single (adresowanie indywidualne)', tables.hrSingle, 'single'));
-      }
-      if (tables.hrGroup.length > 0) {
-        block.appendChild(buildRegSection('Holding Registers — Group (adresowanie grupowe)', tables.hrGroup, 'group'));
-      }
+    if (mode === 'single' && tables.hrSingle.length > 0) {
+      block.appendChild(buildRegSection('Holding Registers (HR) — Single mode', tables.hrSingle));
     }
 
     resultsEl.appendChild(block);
   });
+
+  // W trybie group: HR raz na każdy unikalny typ urządzenia (grupę)
+  if (mode === 'group') {
+    const groupRendered = new Set();
+    selectedDevices.forEach(({ name }) => {
+      if (groupRendered.has(name)) return;
+      groupRendered.add(name);
+
+      const device = devices[name];
+      if (!device) return;
+
+      const groupNum = groupMap[name] ?? 1;
+      const hrGroup = (device.holding_registers_group || []).map(reg => ({
+        addrDec: Calculator.calcGroupAddress(reg.offset, groupNum),
+        addrHex: Calculator.toHex(Calculator.calcGroupAddress(reg.offset, groupNum)),
+        name:    reg.name,
+        reg:     reg,
+      }));
+
+      if (hrGroup.length === 0) return;
+
+      const block = document.createElement('div');
+      block.className = 'result-block group-hr-block';
+
+      const header = document.createElement('div');
+      header.className = 'result-block-header group-hr-header';
+      header.innerHTML = `<h3>${name}</h3><span class="badge">Holding Registers — Grupa ${groupNum}</span>`;
+      block.appendChild(header);
+      block.appendChild(buildRegSection('Holding Registers (HR) — Group mode', hrGroup, 'group'));
+      resultsEl.appendChild(block);
+    });
+  }
 }
 
 // ============================================================

@@ -333,6 +333,15 @@ button:hover { background: #f5f7fa; }
   background: #1e6640;
 }
 
+/* ---- Blok Holding Registers Group (T-box Group mode) ---- */
+.group-hr-block {
+  border-left: 4px solid #b06000;
+}
+
+.group-hr-header {
+  background: #7a4010;
+}
+
 /* ---- Pole Strefa w wierszu urządzenia ---- */
 .zone-field input[type="number"] {
   width: 70px;
