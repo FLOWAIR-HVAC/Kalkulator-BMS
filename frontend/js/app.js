@@ -208,13 +208,12 @@ function renderTbox(resultsEl, selectedDevices, mode) {
     resultsEl.appendChild(block);
   });
 
-  // W trybie group: HR raz na każdy unikalny typ urządzenia (grupę)
+  // W trybie group: HR raz na każdy unikalny typ urządzenia, posortowane po numerze grupy
   if (mode === 'group') {
-    const groupRendered = new Set();
-    selectedDevices.forEach(({ name }) => {
-      if (groupRendered.has(name)) return;
-      groupRendered.add(name);
+    const uniqueDeviceNames = [...new Set(selectedDevices.map(d => d.name))];
+    uniqueDeviceNames.sort((a, b) => (groupMap[a] ?? 999) - (groupMap[b] ?? 999));
 
+    uniqueDeviceNames.forEach(name => {
       const device = devices[name];
       if (!device) return;
 
