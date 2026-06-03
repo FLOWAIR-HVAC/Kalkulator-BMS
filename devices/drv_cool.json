@@ -119,5 +119,10 @@
       "description": "Wydajność wentylatora po osiągnięciu temperatury docelowej w trybie MANUAL. AC 3-biegowy: 0=wyłączony (FAN_SPEED0), 1–33=bieg 1, 34–66=bieg 2, 67–100=bieg 3"
     }
   ],
-  "holding_registers_group": []
+  "holding_registers_group": [
+    { "offset": 4,  "name": "WorkMode",             "values": { "0": "WM_DEF — wartość domyślna po resecie zasilania", "1": "WM_OFF — urządzenie wyłączone", "2": "WM_HT_AUTO — automatyczne grzanie", "3": "WM_HT_MANUAL — ręczne grzanie", "4": "WM_COOL_AUTO — automatyczne chłodzenie", "5": "WM_COOL_MANUAL — ręczne chłodzenie", "6": "WM_VENT — wentylacja" } },
+    { "offset": 5,  "name": "FanEffRef",             "min": 0, "max": 100, "unit": "%", "description": "Wydajność wentylatora. AC 3-biegowy." },
+    { "offset": 9,  "name": "ModeAuto_FanEffRefMin", "min": 0, "max": 100, "unit": "%", "description": "Minimalna wydajność wentylatora w trybie AUTO." },
+    { "offset": 10, "name": "ModeManual_FanEffRef",  "min": 0, "max": 100, "unit": "%", "description": "Wydajność wentylatora po osiągnięciu temperatury docelowej w trybie MANUAL." }
+  ]
 }
