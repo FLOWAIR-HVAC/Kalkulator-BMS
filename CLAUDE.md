@@ -25,28 +25,40 @@ Wzory obliczeniowe: MODBUS_ADDRESS_CALC.md | implementacja: frontend/js/calculat
 - Przed zmianą wzorów w calculator.js sprawdź MODBUS_ADDRESS_CALC.md
 - Komentarze w kodzie: po polsku, wyjaśniają cel funkcji i logikę obliczeń
 
+## Praca z plikami JSON (devices/*.json)
+
+**Nigdy nie zapisuj pliku JSON przez nadpisanie całej zawartości** — grozi ucinaniem
+treści przy długich plikach. Zamiast tego:
+
+1. Edytuj wyłącznie konkretną sekcję (np. `holding_registers_group`) używając narzędzia
+   Edit z minimalnym diff-em, nie przepisując całego pliku.
+2. Po każdej zmianie w dowolnym pliku `devices/*.json` uruchom walidację:
+   ```
+   python3 -c "import json,os; [json.load(open(f'devices/{f}')) for f in os.listdir('devices') if f.endswith('.json') and f != '_schema.json']; print('JSON OK')"
+   ```
+   Jeśli walidacja zwróci błąd — **nie rób commita**, popraw plik.
+3. Po każdej zmianie w `devices/*.json` przebuduj `frontend/js/devices-data.js`
+   skryptem z sekcji poniżej i sprawdź że przebudowa się powiodła.
+
+### Skrypt przebudowy devices-data.js
+
+```python
+import json, os
+devices = {}
+for fname in sorted(os.listdir('devices')):
+    if not fname.endswith('.json') or fname == '_schema.json': continue
+    with open(f'devices/{fname}', encoding='utf-8') as f:
+        d = json.load(f)
+    devices[d['name']] = d
+devices_sorted = dict(sorted(devices.items(), key=lambda x: x[1].get('group_priority', 99)))
+output = 'const DEVICES_DATA = ' + json.dumps(devices_sorted, ensure_ascii=False, indent=2) + ';\n'
+with open('frontend/js/devices-data.js', 'w', encoding='utf-8') as f:
+    f.write(output)
+print('devices-data.js rebuilt OK')
+```
+
 ---
 
 ## Sposób pracy
 
-1. Realizujesz dokładnie to co opisano w zadaniu — nie rozszerzasz zakresu samodzielnie
-2. Jeśli zadanie jest niejasne — pytasz o jeden konkretny brak zanim zaczniesz
-3. Po wykonaniu zadania robisz commit i krótko podsumowujesz co zmieniłeś
-
----
-
-## Commity — Conventional Commits
-
-FORMAT: `<typ>(<zakres>): <opis po angielsku, tryb rozkazujący>`
-
-Typy:    fix | feat | data | docs | refactor | style
-Zakresy: calculator | app | devices-data | zone | style | devices/<nazwa>
-
-Przykłady:
-  fix(calculator): use correct base address 0x2322 for zone device HR
-  feat(app): add expandable value lists for zone HR registers
-  data(devices/drv_cool): add holding_registers_group from documentation
-  docs: add CLAUDE.md with project instructions for Claude Code
-
-Commituj automatycznie po każdym zadaniu. Nie pytaj o potwierdzenie commita.
-Opisy commitów po angielsku, komentarze w kodzie po polsku.
+1. Realizujesz d
