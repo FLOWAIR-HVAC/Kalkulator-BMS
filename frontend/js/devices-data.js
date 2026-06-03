@@ -1985,7 +1985,54 @@ const DEVICES_DATA = {
         "description": "Ustawienie stopnia spalania gazu (aktywne tylko w trybie ręcznego grzania WM_HEAT_MANUAL)"
       }
     ],
-    "holding_registers_group": []
+    "holding_registers_group": [
+      {
+        "offset": 4,
+        "name": "WorkMode",
+        "values": {
+          "0": "WM_NS — tylko odczyt",
+          "1": "WM_OFF — urządzenie wyłączone",
+          "2": "WM_HEAT_AUTO — automatyczne grzanie",
+          "3": "WM_HEAT_MANUAL — ręczne grzanie",
+          "4": "WM_VENTILATION — wentylacja"
+        }
+      },
+      {
+        "offset": 12,
+        "name": "STBTemperatureAlarmOn",
+        "min": 810,
+        "max": 1200,
+        "unit": "°C×0.1",
+        "description": "Temperatura progowa aktywacji alarmu STB. Alarm gdy T3 > wartość."
+      },
+      {
+        "offset": 13,
+        "name": "STBTemperatureAlarmOff",
+        "min": 610,
+        "max": 800,
+        "unit": "°C×0.1",
+        "description": "Temperatura resetowania alarmu STB. Reset gdy T3 < wartość."
+      },
+      {
+        "offset": 14,
+        "name": "ContModeFanSpeedRef",
+        "values": {
+          "0": "Fan OFF — wentylator wyłączony",
+          "100": "Fan ON — wentylator włączony"
+        },
+        "description": "Wydajność wentylatora po osiągnięciu temperatury docelowej."
+      },
+      {
+        "offset": 15,
+        "name": "GasBurnerLvlRef",
+        "values": {
+          "0": "RO — tylko odczyt",
+          "1": "FIRST_STEP — pierwszy stopień spalania",
+          "2": "SECOND_STEP — drugi stopień spalania"
+        },
+        "description": "Stopień spalania gazu (aktywne w trybie WM_HEAT_MANUAL)."
+      }
+    ]
   },
   "DRV R KM NEXT": {
     "name": "DRV R KM NEXT",
@@ -2239,7 +2286,133 @@ const DEVICES_DATA = {
         "description": "Ustawienie stopnia spalania gazu (aktywne tylko w trybie ręcznego grzania WM_HEAT_MANUAL)"
       }
     ],
-    "holding_registers_group": []
+    "holding_registers_group": [
+      {
+        "offset": 4,
+        "name": "WorkMode",
+        "values": {
+          "0": "WM_NS — tylko odczyt",
+          "1": "WM_OFF — urządzenie wyłączone",
+          "2": "WM_HEAT_AUTO — automatyczne grzanie",
+          "3": "WM_HEAT_MANUAL — ręczne grzanie",
+          "4": "WM_VENTILATION — wentylacja"
+        }
+      },
+      {
+        "offset": 5,
+        "name": "DamperForceMode",
+        "values": {
+          "0": "DAMPER_FMD_NS — tylko odczyt",
+          "1": "DAMPER_FMD_OFF — wymuszanie wyłączone",
+          "2": "DAMPER_FMD_ON — wymuszanie włączone (jeśli T1 < DamperForceTempRef)"
+        }
+      },
+      {
+        "offset": 6,
+        "name": "DamperForceTempRef",
+        "min": -100,
+        "max": 150,
+        "unit": "°C×0.1",
+        "description": "Temperatura wymuszonego otwarcia klapy (tryb DAMPER_FMD_ON)."
+      },
+      {
+        "offset": 7,
+        "name": "DamperForceLevelRef",
+        "min": 0,
+        "max": 100,
+        "unit": "%",
+        "description": "Docelowe otwarcie klapy przy wymuszeniu."
+      },
+      {
+        "offset": 8,
+        "name": "DamperLevelRef",
+        "min": 0,
+        "max": 100,
+        "unit": "%",
+        "description": "Pozycja klapy mieszającej."
+      },
+      {
+        "offset": 9,
+        "name": "DamperContLevelRef",
+        "min": 0,
+        "max": 100,
+        "unit": "%",
+        "description": "Pozycja klapy gdy WorkMode = WM_WINTER_CONT."
+      },
+      {
+        "offset": 10,
+        "name": "FanRoofForceEffRef",
+        "min": -100,
+        "max": 100,
+        "unit": "%",
+        "description": "Wymuszenie prędkości wentylatora dachowego (dodawane do FanEffRef)."
+      },
+      {
+        "offset": 11,
+        "name": "FanRoofMode",
+        "values": {
+          "0": "FR_MD_NS — tylko odczyt",
+          "1": "FR_MD_01 — zależny od pozycji klapy (DamperLevelRef) i nastawy wentylatora (FanEffRef)",
+          "2": "FR_MD_02 — zależny wyłącznie od pozycji klapy (DamperLevelRef)"
+        }
+      },
+      {
+        "offset": 12,
+        "name": "STBTemperatureAlarmOn",
+        "min": 810,
+        "max": 1200,
+        "unit": "°C×0.1",
+        "description": "Temperatura progowa aktywacji alarmu STB."
+      },
+      {
+        "offset": 13,
+        "name": "STBTemperatureAlarmOff",
+        "min": 610,
+        "max": 800,
+        "unit": "°C×0.1",
+        "description": "Temperatura resetowania alarmu STB."
+      },
+      {
+        "offset": 14,
+        "name": "ContModeFanSpeedRef",
+        "values": {
+          "0": "Fan OFF — wentylator wyłączony",
+          "100": "Fan ON — wentylator włączony"
+        },
+        "description": "Wydajność wentylatora po osiągnięciu temperatury docelowej."
+      },
+      {
+        "offset": 15,
+        "name": "GasBurnerLvlRef",
+        "values": {
+          "0": "RO — tylko odczyt",
+          "1": "FIRST_STEP — pierwszy stopień spalania",
+          "2": "SECOND_STEP — drugi stopień spalania"
+        },
+        "description": "Stopień spalania gazu (aktywne w trybie WM_HEAT_MANUAL)."
+      },
+      {
+        "offset": 16,
+        "name": "ExternalInputTH1DamperLevelRef",
+        "min": 0,
+        "max": 100,
+        "unit": "%",
+        "description": "Pozycja klapy dla wejścia zewnętrznego EXT TH1. Krok: 5."
+      },
+      {
+        "offset": 17,
+        "name": "FilterMaxWorkTime",
+        "description": "Czas po którym aktywuje się alarm filtra. Krok: 100."
+      },
+      {
+        "offset": 18,
+        "name": "ExternalInputTH2DamperLevelRef",
+        "min": 0,
+        "max": 100,
+        "unit": "%",
+        "description": "Pozycja klapy dla wejścia zewnętrznego EXT TH2. Krok: 5."
+      }
+    ]
   },
   "DRV COOL": {
     "name": "DRV COOL",
@@ -2362,7 +2535,45 @@ const DEVICES_DATA = {
         "description": "Wydajność wentylatora po osiągnięciu temperatury docelowej w trybie MANUAL. AC 3-biegowy: 0=wyłączony (FAN_SPEED0), 1–33=bieg 1, 34–66=bieg 2, 67–100=bieg 3"
       }
     ],
-    "holding_registers_group": []
+    "holding_registers_group": [
+      {
+        "offset": 4,
+        "name": "WorkMode",
+        "values": {
+          "0": "WM_DEF — wartość domyślna po resecie zasilania",
+          "1": "WM_OFF — urządzenie wyłączone",
+          "2": "WM_HT_AUTO — automatyczne grzanie",
+          "3": "WM_HT_MANUAL — ręczne grzanie",
+          "4": "WM_COOL_AUTO — automatyczne chłodzenie",
+          "5": "WM_COOL_MANUAL — ręczne chłodzenie",
+          "6": "WM_VENT — wentylacja"
+        }
+      },
+      {
+        "offset": 5,
+        "name": "FanEffRef",
+        "min": 0,
+        "max": 100,
+        "unit": "%",
+        "description": "Wydajność wentylatora. AC 3-biegowy."
+      },
+      {
+        "offset": 9,
+        "name": "ModeAuto_FanEffRefMin",
+        "min": 0,
+        "max": 100,
+        "unit": "%",
+        "description": "Minimalna wydajność wentylatora w trybie AUTO."
+      },
+      {
+        "offset": 10,
+        "name": "ModeManual_FanEffRef",
+        "min": 0,
+        "max": 100,
+        "unit": "%",
+        "description": "Wydajność wentylatora po osiągnięciu temperatury docelowej w trybie MANUAL."
+      }
+    ]
   },
   "DRV CUBE": {
     "name": "DRV CUBE",
