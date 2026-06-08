@@ -8,7 +8,7 @@
  *
  * Wzory (T-box Zone):
  *   IR urządzenia:  offset + 320  + (pozycja_posortowana × 32)   // baza 0x0140
- *   HR urządzenia:  offset + 8994 + (pozycja_posortowana × 32)   // baza 0x2322
+ *   HR urządzenia:  offset + 8990 + (groupId − 1) × 32           // baza 0x2320, group = (typ+strefa)
  *   IR/HR strefy:   base_addr + (indeks_strefy × 16)
  *
  * Rejestry sterownika mają stałe adresy (nie zależą od urządzenia).
@@ -34,9 +34,10 @@ const Calculator = {
     return offset + 320 + sortedIndex * 32;
   },
 
-  // Adres HR urządzenia (statyczna przestrzeń): baza 0x2322 = 8994
-  calcZoneDeviceHRAddress(offset, sortedIndex) {
-    return offset + 8994 + sortedIndex * 32;
+  // Adres HR urządzenia (statyczna przestrzeń T-box Zone): baza 0x2320 = 8990 + 2
+  // groupId: numer grupy (typ+strefa), nadawany w kolejności napotkania po sort wg adresu
+  calcZoneDeviceHRGroupAddress(offset, groupId) {
+    return offset + 8990 + (groupId - 1) * 32;
   },
 
   // Adres rejestrów strefy

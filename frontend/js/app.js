@@ -250,9 +250,22 @@ function renderTboxZone(resultsEl, selectedDevices) {
   // Urządzenia — posortowane po adresie, IR obliczane przez pozycję w liście
   const sortedDevices = [...selectedDevices].sort((a, b) => a.addr - b.addr);
 
+  // Przydziel ID grup na podstawie kombinacji (typ + strefa), w kolejności napotkania
+  const groupKeyMap = {};
+  let nextGroupId = 1;
+  const zoneGroupIds = sortedDevices.map(({ name, zone }) => {
+    const key = `${name}|${zone}`;
+    if (groupKeyMap[key] === undefined) {
+      groupKeyMap[key] = nextGroupId++;
+    }
+    return groupKeyMap[key];
+  });
+
   sortedDevices.forEach(({ name, addr, zone }, sortedIndex) => {
     const device = devices[name];
     if (!device) return;
+
+    const groupId = zoneGroupIds[sortedIndex];
 
     const mapIR = (reg) => ({
       offset:  reg.offset,
@@ -263,8 +276,8 @@ function renderTboxZone(resultsEl, selectedDevices) {
     });
     const mapHR = (reg) => ({
       offset:  reg.offset,
-      addrDec: Calculator.calcZoneDeviceHRAddress(reg.offset, sortedIndex),
-      addrHex: Calculator.toHex(Calculator.calcZoneDeviceHRAddress(reg.offset, sortedIndex)),
+      addrDec: Calculator.calcZoneDeviceHRGroupAddress(reg.offset, groupId),
+      addrHex: Calculator.toHex(Calculator.calcZoneDeviceHRGroupAddress(reg.offset, groupId)),
       name:    reg.name,
       reg:     reg,
     });
@@ -282,15 +295,15 @@ function renderTboxZone(resultsEl, selectedDevices) {
     const hrHeader = [
       {
         offset:  null,
-        addrDec: 8992 + sortedIndex * 32,
-        addrHex: Calculator.toHex(8992 + sortedIndex * 32),
+        addrDec: 8992 + (groupId - 1) * 32,
+        addrHex: Calculator.toHex(8992 + (groupId - 1) * 32),
         name:    'ZoneID',
         reg:     { description: 'Identyfikator strefy przypisanej do tego urządzenia (1–31)' },
       },
       {
         offset:  null,
-        addrDec: 8993 + sortedIndex * 32,
-        addrHex: Calculator.toHex(8993 + sortedIndex * 32),
+        addrDec: 8993 + (groupId - 1) * 32,
+        addrHex: Calculator.toHex(8993 + (groupId - 1) * 32),
         name:    'DeviceID',
         reg:     { description: 'Identyfikator typu urządzenia (software type, lista w rozdz. 2.1 dokumentacji)' },
       },
