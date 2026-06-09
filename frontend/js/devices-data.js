@@ -3133,8 +3133,8 @@ const DEVICES_DATA = {
     ],
     "holding_registers_group": []
   },
-  "DRV SLIM": {
-    "name": "DRV SLIM",
+  "SLIM (DRV SLIM)": {
+    "name": "SLIM (DRV SLIM)",
     "description": "Kurtyna powietrzna SLIM",
     "group_priority": 15,
     "input_registers": [
