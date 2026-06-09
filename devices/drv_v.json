@@ -1,5 +1,5 @@
 {
-  "name": "DRV V",
+  "name": "LEO AC (DRV V)",
   "description": "Nagrzewnica wodna z wentylatorem EC",
   "group_priority": 5,
   "input_registers": [

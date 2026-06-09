@@ -1,5 +1,5 @@
 {
-  "name": "DRV EL",
+  "name": "LEO EL (DRV EL)",
   "description": "Nagrzewnica elektryczna",
   "group_priority": 9,
   "input_registers": [

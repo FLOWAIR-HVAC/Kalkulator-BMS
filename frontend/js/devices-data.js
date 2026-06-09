@@ -1,6 +1,6 @@
 const DEVICES_DATA = {
-  "DRV OXEN": {
-    "name": "DRV OXEN",
+  "OXEN (DRV OXEN)": {
+    "name": "OXEN (DRV OXEN)",
     "description": "Rekuperator OXEN",
     "group_priority": 1,
     "input_registers": [
@@ -161,8 +161,8 @@ const DEVICES_DATA = {
       }
     ]
   },
-  "DRV KM": {
-    "name": "DRV KM",
+  "LEO KM (DRV KM)": {
+    "name": "LEO KM (DRV KM)",
     "description": "Centrala wentylacyjna z klapą mieszającą",
     "group_priority": 2,
     "input_registers": [
@@ -472,8 +472,8 @@ const DEVICES_DATA = {
       }
     ]
   },
-  "DRV ELIS": {
-    "name": "DRV ELIS",
+  "ELIS (DRV ELIS)": {
+    "name": "ELIS (DRV ELIS)",
     "description": "Kurtyna powietrzna ELIS",
     "group_priority": 3,
     "input_registers": [
@@ -1039,8 +1039,8 @@ const DEVICES_DATA = {
     ],
     "holding_registers_group": []
   },
-  "DRV V": {
-    "name": "DRV V",
+  "LEO AC (DRV V)": {
+    "name": "LEO AC (DRV V)",
     "description": "Nagrzewnica wodna z wentylatorem EC",
     "group_priority": 5,
     "input_registers": [
@@ -1255,8 +1255,8 @@ const DEVICES_DATA = {
       }
     ]
   },
-  "DRV M": {
-    "name": "DRV M",
+  "LEO EC (DRV M)": {
+    "name": "LEO EC (DRV M)",
     "description": "Nagrzewnica wodna z wentylatorem EC (płynna regulacja)",
     "group_priority": 6,
     "input_registers": [
@@ -1477,8 +1477,8 @@ const DEVICES_DATA = {
       }
     ]
   },
-  "DRV D": {
-    "name": "DRV D",
+  "LEO D (DRV D)": {
+    "name": "LEO D (DRV D)",
     "description": "Destratyfikator (DRV D / LEO D)",
     "group_priority": 7,
     "input_registers": [
@@ -1603,8 +1603,8 @@ const DEVICES_DATA = {
       }
     ]
   },
-  "DRV EL": {
-    "name": "DRV EL",
+  "LEO EL (DRV EL)": {
+    "name": "LEO EL (DRV EL)",
     "description": "Nagrzewnica elektryczna",
     "group_priority": 9,
     "input_registers": [
@@ -1816,8 +1816,8 @@ const DEVICES_DATA = {
       }
     ]
   },
-  "DRV R NEXT": {
-    "name": "DRV R NEXT",
+  "ROBUR R NEXT (DRV R NEXT)": {
+    "name": "ROBUR R NEXT (DRV R NEXT)",
     "description": "Nagrzewnica gazowa ROBUR NEXT",
     "group_priority": 10,
     "input_registers": [
@@ -2034,8 +2034,8 @@ const DEVICES_DATA = {
       }
     ]
   },
-  "DRV R KM NEXT": {
-    "name": "DRV R KM NEXT",
+  "ROBUR R KM NEXT (DRV R KM NEXT)": {
+    "name": "ROBUR R KM NEXT (DRV R KM NEXT)",
     "description": "Nagrzewnica gazowa ROBUR NEXT z klapą mieszającą",
     "group_priority": 11,
     "input_registers": [
@@ -2414,8 +2414,8 @@ const DEVICES_DATA = {
       }
     ]
   },
-  "DRV COOL": {
-    "name": "DRV COOL",
+  "LEO COOL (DRV COOL)": {
+    "name": "LEO COOL (DRV COOL)",
     "description": "Nagrzewnica/chłodnica wodna",
     "group_priority": 12,
     "input_registers": [
@@ -2580,8 +2580,8 @@ const DEVICES_DATA = {
       }
     ]
   },
-  "DRV CUBE": {
-    "name": "DRV CUBE",
+  "CUBE (DRV CUBE)": {
+    "name": "CUBE (DRV CUBE)",
     "description": "Jednostka wentylacyjna CUBE z dyfuzorem wirowym i czujnikiem CO2",
     "group_priority": 13,
     "input_registers": [

@@ -1,5 +1,5 @@
 {
-  "name": "DRV M",
+  "name": "LEO EC (DRV M)",
   "description": "Nagrzewnica wodna z wentylatorem EC (płynna regulacja)",
   "group_priority": 6,
   "input_registers": [
