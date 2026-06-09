@@ -91,6 +91,48 @@ select:focus, input[type="number"]:focus {
   gap: 5px;
 }
 
+/* Dymek pomocy dla przycisków Single / Group */
+.radio-group label.mode-tip {
+  position: relative;
+}
+.radio-group label.mode-tip::before {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a4a6b;
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.45;
+  padding: 8px 12px;
+  border-radius: 10px;
+  width: 210px;
+  text-align: center;
+  pointer-events: none;
+  white-space: normal;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  z-index: 20;
+}
+.radio-group label.mode-tip::after {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #1a4a6b;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  z-index: 20;
+}
+.radio-group label.mode-tip:hover::before,
+.radio-group label.mode-tip:hover::after {
+  opacity: 1;
+}
+
 /* ---- Devices table in form ---- */
 .devices-header {
   font-size: 11px;
