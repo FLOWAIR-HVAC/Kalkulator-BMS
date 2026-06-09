@@ -402,6 +402,34 @@ button:hover { background: #f5f7fa; }
   background: #e4edff;
 }
 
+/* Dymek "Kliknij aby rozwinąć" — widoczny przy hover, znika gdy wiersz otwarty */
+.reg-table td:last-child {
+  overflow: visible;
+}
+.reg-row-expandable .reg-name {
+  position: relative;
+}
+.reg-row-expandable:not(.reg-row-open) .reg-name::after {
+  content: 'Kliknij aby rozwinąć';
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background: #2a2a2a;
+  color: #fff;
+  font-size: 11px;
+  font-weight: normal;
+  padding: 3px 8px;
+  border-radius: 5px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 50;
+}
+.reg-row-expandable:not(.reg-row-open):hover .reg-name::after {
+  opacity: 1;
+}
+
 .expand-icon {
   display: inline-block;
   font-size: 9px;
