@@ -1,5 +1,5 @@
 {
-  "name": "DRV AX",
+  "name": "ELIS AX (DRV AX)",
   "description": "Kurtyna powietrzna ELIS AX (wielobiegowe wentylatory EC)",
   "group_priority": 4,
   "tbox_zone_only": true,

@@ -715,8 +715,8 @@ const DEVICES_DATA = {
       }
     ]
   },
-  "DRV AX": {
-    "name": "DRV AX",
+  "ELIS AX (DRV AX)": {
+    "name": "ELIS AX (DRV AX)",
     "description": "Kurtyna powietrzna ELIS AX (wielobiegowe wentylatory EC)",
     "group_priority": 4,
     "tbox_zone_only": true,
@@ -2805,8 +2805,8 @@ const DEVICES_DATA = {
     ],
     "holding_registers_group": []
   },
-  "DRV LUNA": {
-    "name": "DRV LUNA",
+  "LUNA (DRV LUNA)": {
+    "name": "LUNA (DRV LUNA)",
     "description": "Nagrzewnica LUNA",
     "group_priority": 14,
     "tbox_zone_only": true,
