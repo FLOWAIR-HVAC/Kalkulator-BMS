@@ -26,7 +26,7 @@ function loadDevices() {
 function updateFormForControllerType() {
   const val = document.getElementById('controllerType').value;
   const isTboxZone = val === 'tbox_zone';
-  const isMbox = val === 'mbox';
+  const isMbox     = val === 'mbox';
 
   // Tryb pracy — widoczny tylko dla T-box klasycznego
   document.getElementById('mode-field').style.display = (isTboxZone || isMbox) ? 'none' : '';
@@ -36,12 +36,21 @@ function updateFormForControllerType() {
     el.style.display = isTboxZone ? 'flex' : 'none';
   });
 
-  // Sekcja urządzeń + przyciski — ukryta dla M-box
+  // Sekcja urządzeń T-box
   document.getElementById('devices-container').style.display = isMbox ? 'none' : '';
-  document.querySelector('.form-actions').style.display = isMbox ? 'none' : '';
-  document.getElementById('mbox-placeholder').style.display = isMbox ? 'block' : 'none';
 
-  // Przebuduj opcje we wszystkich selektach urządzeń — filtruj tbox_zone_only
+  // Formularz M-box
+  const mboxForm = document.getElementById('mbox-form');
+  if (mboxForm) mboxForm.style.display = isMbox ? 'block' : 'none';
+
+  // Przyciski formularza T-box
+  document.querySelector('.form-actions').style.display = isMbox ? 'none' : '';
+
+  // Przyciski formularza M-box
+  const mboxActions = document.getElementById('mbox-actions');
+  if (mboxActions) mboxActions.style.display = isMbox ? 'flex' : 'none';
+
+  // Przebuduj opcje w selektach urządzeń T-box (tylko gdy nie M-box)
   if (!isMbox) {
     const names = Object.keys(devices)
       .filter(name => isTboxZone || !devices[name].tbox_zone_only)
@@ -546,6 +555,130 @@ function hideError() {
 function resetForm() {
   document.getElementById('results').style.display = 'none';
   document.querySelector('.form-section').style.display = 'block';
+
+  // Reset pól M-box
+  const mboxDevType = document.getElementById('mbox-device-type');
+  const mboxDevId   = document.getElementById('mbox-device-id');
+  const mboxZoneNum = document.getElementById('mbox-zone-num');
+  if (mboxDevType) mboxDevType.value = '';
+  if (mboxDevId)   mboxDevId.value = '1';
+  if (mboxZoneNum) mboxZoneNum.value = '';
+}
+
+// ============================================================
+// Render: M-box (Modbus TCP)
+// ============================================================
+function calculateMbox() {
+  const deviceType = document.getElementById('mbox-device-type').value;
+  const deviceId   = parseInt(document.getElementById('mbox-device-id').value, 10);
+  const zoneNumRaw = document.getElementById('mbox-zone-num').value;
+  const zoneNum    = zoneNumRaw ? parseInt(zoneNumRaw, 10) : null;
+
+  // Walidacja
+  if (!deviceType) {
+    showError('Wybierz typ urządzenia.');
+    return;
+  }
+  if (!deviceId || deviceId < 1 || deviceId > 32) {
+    showError('DeviceID musi być liczbą od 1 do 32.');
+    return;
+  }
+  if (zoneNum !== null && (zoneNum < 1 || zoneNum > 6)) {
+    showError('Numer strefy musi być od 1 do 6.');
+    return;
+  }
+  hideError();
+
+  const mbox   = Calculator.MBOX;
+  const devDef = mbox.devices[deviceType];
+  if (!devDef) {
+    showError('Nieznany typ urządzenia.');
+    return;
+  }
+
+  const resultsEl = document.getElementById('results-content');
+  resultsEl.innerHTML = '';
+
+  // ---- Sekcja: Rejestry systemowe ----
+  const sysWrapper = document.createElement('div');
+  sysWrapper.className = 'result-block';
+  sysWrapper.innerHTML = `
+    <div class="result-block-header">
+      <h3>Rejestry systemowe</h3>
+      <span class="badge">M-box System</span>
+    </div>`;
+
+  const sysHrRows = mbox.systemHR.map(r => ({
+    addrDec: Calculator.calcMboxSystemAddress(r.n),
+    addrHex: Calculator.toHex(Calculator.calcMboxSystemAddress(r.n)),
+    name: r.name,
+    reg: r,
+  }));
+  const sysIrRows = mbox.systemIR.map(r => ({
+    addrDec: Calculator.calcMboxSystemAddress(r.n),
+    addrHex: Calculator.toHex(Calculator.calcMboxSystemAddress(r.n)),
+    name: r.name,
+    reg: r,
+  }));
+  sysWrapper.appendChild(buildRegSection('Holding Registers (HR) — odczyt/zapis', sysHrRows));
+  sysWrapper.appendChild(buildRegSection('Input Registers (IR) — tylko odczyt', sysIrRows));
+  resultsEl.appendChild(sysWrapper);
+
+  // ---- Sekcja: Rejestry urządzenia ----
+  const devWrapper = document.createElement('div');
+  devWrapper.className = 'result-block';
+  devWrapper.innerHTML = `
+    <div class="result-block-header">
+      <h3>${deviceType}</h3>
+      <span class="badge">DeviceID&nbsp;${deviceId}</span>
+    </div>`;
+
+  const devHrRows = devDef.hr.map(r => ({
+    addrDec: Calculator.calcMboxDeviceAddress(deviceId, r.n),
+    addrHex: Calculator.toHex(Calculator.calcMboxDeviceAddress(deviceId, r.n)),
+    name: r.name,
+    reg: r,
+  }));
+  const devIrRows = devDef.ir.map(r => ({
+    addrDec: Calculator.calcMboxDeviceAddress(deviceId, r.n),
+    addrHex: Calculator.toHex(Calculator.calcMboxDeviceAddress(deviceId, r.n)),
+    name: r.name,
+    reg: r,
+  }));
+  devWrapper.appendChild(buildRegSection('Holding Registers (HR) — odczyt/zapis', devHrRows));
+  devWrapper.appendChild(buildRegSection('Input Registers (IR) — tylko odczyt', devIrRows));
+  resultsEl.appendChild(devWrapper);
+
+  // ---- Sekcja: Rejestry strefowe (opcjonalnie) ----
+  if (zoneNum !== null) {
+    const zoneWrapper = document.createElement('div');
+    zoneWrapper.className = 'result-block';
+    zoneWrapper.innerHTML = `
+      <div class="result-block-header">
+        <h3>Rejestry strefowe</h3>
+        <span class="badge">Strefa&nbsp;${zoneNum}</span>
+      </div>`;
+
+    const zoneHrRows = mbox.zoneHR.map(r => ({
+      addrDec: Calculator.calcMboxZoneAddress(zoneNum, r.n),
+      addrHex: Calculator.toHex(Calculator.calcMboxZoneAddress(zoneNum, r.n)),
+      name: r.name,
+      reg: r,
+    }));
+    const zoneIrRows = mbox.zoneIR.map(r => ({
+      addrDec: Calculator.calcMboxZoneAddress(zoneNum, r.n),
+      addrHex: Calculator.toHex(Calculator.calcMboxZoneAddress(zoneNum, r.n)),
+      name: r.name,
+      reg: r,
+    }));
+    zoneWrapper.appendChild(buildRegSection('Holding Registers (HR) — odczyt/zapis', zoneHrRows));
+    zoneWrapper.appendChild(buildRegSection('Input Registers (IR) — tylko odczyt', zoneIrRows));
+    resultsEl.appendChild(zoneWrapper);
+  }
+
+  // Pokaż wyniki
+  document.getElementById('results').style.display = 'block';
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
 }
 
 // ============================================================
@@ -555,5 +688,6 @@ document.getElementById('controllerType').addEventListener('change', updateFormF
 document.getElementById('btn-add-device').addEventListener('click', addDeviceRow);
 document.getElementById('btn-calculate').addEventListener('click', calculate);
 document.getElementById('btn-reset').addEventListener('click', resetForm);
+document.getElementById('btn-mbox-calculate').addEventListener('click', calculateMbox);
 
 loadDevices();

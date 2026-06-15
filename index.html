@@ -41,8 +41,40 @@
       <!-- Wiersze urządzeń dodawane dynamicznie -->
     </div>
 
-    <div id="mbox-placeholder" style="display:none">
-      <p class="mbox-info">Kalkulator dla sterownika M-box jest w przygotowaniu.</p>
+    <div id="mbox-form" style="display:none">
+      <div class="form-row mbox-row">
+        <div class="field-group">
+          <label>Typ urządzenia</label>
+          <select id="mbox-device-type">
+            <option value="">— wybierz —</option>
+            <option value="LEO D (AC/EC)">LEO D (AC/EC)</option>
+            <option value="ELIS (AC) — kurtyna powietrzna">ELIS (AC) — kurtyna</option>
+            <option value="SLIM (AC) — kurtyna powietrzna">SLIM (AC) — kurtyna</option>
+            <option value="KM — Komora Mieszania">KM — Komora Mieszania</option>
+            <option value="LEO M (EC)">LEO M (EC)</option>
+            <option value="ROOFTOP">ROOFTOP</option>
+            <option value="LEO V (AC)">LEO V (AC)</option>
+            <option value="LEO EL (AC)">LEO EL (AC)</option>
+            <option value="LEO COOL (AC)">LEO COOL (AC)</option>
+            <option value="ROBUR R KM NEXT">ROBUR R KM NEXT</option>
+            <option value="ROBUR R NEXT">ROBUR R NEXT</option>
+            <option value="LUNA">LUNA</option>
+            <option value="OXEN">OXEN</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>DeviceID <span class="field-hint">(1–32)</span></label>
+          <input type="number" id="mbox-device-id" min="1" max="32" value="1">
+        </div>
+        <div class="field-group">
+          <label>Numer strefy <span class="field-hint">(1–6, opcja)</span></label>
+          <input type="number" id="mbox-zone-num" min="1" max="6" placeholder="—">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions" id="mbox-actions" style="display:none">
+      <button id="btn-mbox-calculate" type="button" class="btn-primary">Oblicz</button>
     </div>
 
     <div class="form-actions">
