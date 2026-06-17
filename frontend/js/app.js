@@ -672,13 +672,22 @@ function calculateMbox() {
   const resultsEl = document.getElementById('results-content');
   resultsEl.innerHTML = '';
 
-  // ---- Sekcja: Rejestry systemowe (raz dla całego M-box) ----
+  // ---- Sekcja: Rejestry systemowe — domyślnie ukryta, jak buildControllerSection ----
+  const sysSection = document.createElement('div');
+  sysSection.className = 'controller-section';
+
+  const sysBtn = document.createElement('button');
+  sysBtn.type = 'button';
+  sysBtn.className = 'btn-controller-toggle';
+  sysBtn.textContent = 'Pokaż rejestry systemowe';
+
   const sysWrapper = document.createElement('div');
-  sysWrapper.className = 'result-block';
+  sysWrapper.className = 'result-block controller-block';
+  sysWrapper.style.display = 'none';
   sysWrapper.innerHTML = `
-    <div class="result-block-header">
+    <div class="result-block-header controller-block-header">
       <h3>Rejestry systemowe</h3>
-      <span class="badge">M-box System</span>
+      <span class="badge">M-box</span>
     </div>`;
 
   const sysHrRows = mbox.systemHR.map(r => ({
@@ -695,7 +704,15 @@ function calculateMbox() {
   }));
   sysWrapper.appendChild(buildRegSection('Input Registers (IR) — tylko odczyt', sysIrRows));
   sysWrapper.appendChild(buildRegSection('Holding Registers (HR) — odczyt/zapis', sysHrRows));
-  resultsEl.appendChild(sysWrapper);
+
+  sysBtn.addEventListener('click', () => {
+    const isOpen = sysWrapper.style.display !== 'none';
+    sysWrapper.style.display = isOpen ? 'none' : 'block';
+    sysBtn.textContent = isOpen ? 'Pokaż rejestry systemowe' : 'Ukryj rejestry systemowe';
+  });
+
+  sysSection.append(sysBtn, sysWrapper);
+  resultsEl.appendChild(sysSection);
 
   // ---- Sekcje urządzeń — po jednej na każdy wiersz ----
   const processedZones = new Set();
@@ -707,11 +724,11 @@ function calculateMbox() {
     // Blok urządzenia
     const devWrapper = document.createElement('div');
     devWrapper.className = 'result-block';
-    const zoneInfo = zoneNum !== null ? ` &nbsp;|&nbsp; Strefa&nbsp;${zoneNum}` : '';
+    const zoneInfo = zoneNum !== null ? ` &nbsp;|&nbsp; Strefa:&nbsp;${zoneNum}` : '';
     devWrapper.innerHTML = `
       <div class="result-block-header">
         <h3>${deviceType}</h3>
-        <span class="badge">DeviceID&nbsp;${deviceId}${zoneInfo}</span>
+        <span class="badge">Adres:&nbsp;${deviceId}${zoneInfo}</span>
       </div>`;
 
     const devHrRows = devDef.hr.map(r => ({
@@ -735,11 +752,11 @@ function calculateMbox() {
       processedZones.add(zoneNum);
 
       const zoneWrapper = document.createElement('div');
-      zoneWrapper.className = 'result-block';
+      zoneWrapper.className = 'result-block zone-block';
       zoneWrapper.innerHTML = `
-        <div class="result-block-header">
-          <h3>Rejestry strefowe</h3>
-          <span class="badge">Strefa&nbsp;${zoneNum}</span>
+        <div class="result-block-header zone-block-header">
+          <h3>Strefa ${zoneNum}</h3>
+          <span class="badge">Rejestry strefy</span>
         </div>`;
 
       const zoneHrRows = mbox.zoneHR.map(r => ({
