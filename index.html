@@ -9,15 +9,16 @@
 <body>
 
 <header>
-  <h1>Kalkulator BMS</h1>
-  <p>Obliczanie adresów rejestrów Modbus dla urządzeń podłączonych do sterowników SYSTEMU FLOWAIR</p>
+  <h1 data-i18n="page.h1">Kalkulator BMS</h1>
+  <p data-i18n="page.subtitle">Obliczanie adresów rejestrów Modbus dla urządzeń podłączonych do sterowników SYSTEMU FLOWAIR</p>
+  <button id="btn-lang" class="btn-lang">EN</button>
 </header>
 
 <main>
   <section class="form-section">
     <div class="form-row">
       <div class="field-group">
-        <label>Sterownik</label>
+        <label data-i18n="form.controller">Sterownik</label>
         <select id="controllerType">
           <option value="tbox">T-box</option>
           <option value="tbox_zone">T-box Zone</option>
@@ -25,16 +26,16 @@
         </select>
       </div>
       <div class="field-group" id="mode-field">
-        <label>Tryb pracy</label>
+        <label data-i18n="form.mode">Tryb pracy</label>
         <div class="radio-group">
-          <label class="mode-tip" data-tip="W tym trybie sterujemy każdym urządzeniem indywidualnie, ekran sterownika T-box jest zablokowany"><input type="radio" name="mode" value="single" checked> Single</label>
-          <label class="mode-tip" data-tip="W tym trybie sterujemy grupami tych samych urządzeń, ekran sterownika T-box jest odblokowany"><input type="radio" name="mode" value="group"> Group</label>
+          <label class="mode-tip" data-i18n-tip="form.mode.single_tip" data-tip="W tym trybie sterujemy każdym urządzeniem indywidualnie, ekran sterownika T-box jest zablokowany"><input type="radio" name="mode" value="single" checked> Single</label>
+          <label class="mode-tip" data-i18n-tip="form.mode.group_tip" data-tip="W tym trybie sterujemy grupami tych samych urządzeń, ekran sterownika T-box jest odblokowany"><input type="radio" name="mode" value="group"> Group</label>
         </div>
       </div>
     </div>
 
     <div class="devices-header">
-      <span>Urządzenia</span>
+      <span data-i18n="form.devices">Urządzenia</span>
     </div>
 
     <div id="devices-container">
@@ -60,13 +61,14 @@
 
   <section id="results" style="display:none">
     <div class="results-header">
-      <h2>Wyniki</h2>
-      <button id="btn-reset" type="button" class="btn-secondary">Nowe obliczenie</button>
+      <h2 data-i18n="result.h2">Wyniki</h2>
+      <button id="btn-reset" type="button" class="btn-secondary" data-i18n="btn.reset">Nowe obliczenie</button>
     </div>
     <div id="results-content"></div>
   </section>
 </main>
 
+<script src="frontend/js/translations.js"></script>
 <script src="frontend/js/devices-data.js"></script>
 <script src="frontend/js/calculator.js"></script>
 <script src="frontend/js/app.js"></script>
