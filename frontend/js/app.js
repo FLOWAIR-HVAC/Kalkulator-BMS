@@ -23,6 +23,10 @@ function applyStaticTranslations() {
   // Przycisk języka — pokazuje kod języka do przełączenia
   const btnLang = document.getElementById('btn-lang');
   if (btnLang) btnLang.textContent = t('misc.lang_btn');
+  // Elementy z data-i18n-title — aktualizuj atrybut title
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    el.title = t(el.getAttribute('data-i18n-title'));
+  });
   // Atrybut lang na <html>
   document.documentElement.lang = currentLang;
 }
@@ -120,6 +124,7 @@ function addDeviceRow() {
 
   const addrLabel = document.createElement('label');
   addrLabel.textContent = t('form.address');
+  addrLabel.setAttribute('data-i18n', 'form.address');
   addrLabel.htmlFor = `addr-${id}`;
 
   const addrInput = document.createElement('input');
@@ -136,6 +141,7 @@ function addDeviceRow() {
 
   const zoneLabel = document.createElement('label');
   zoneLabel.textContent = t('form.zone');
+  zoneLabel.setAttribute('data-i18n', 'form.zone');
   zoneLabel.htmlFor = `zone-${id}`;
 
   const zoneInput = document.createElement('input');
@@ -152,6 +158,7 @@ function addDeviceRow() {
   removeBtn.className = 'btn-remove';
   removeBtn.textContent = '×';
   removeBtn.title = t('form.remove_title');
+  removeBtn.setAttribute('data-i18n-title', 'form.remove_title');
   removeBtn.onclick = () => row.remove();
 
   row.append(select, addrLabel, addrInput, zoneField, removeBtn);
@@ -182,6 +189,7 @@ function addMboxDeviceRow() {
   // DeviceID
   const devIdLabel = document.createElement('label');
   devIdLabel.textContent = t('form.address');
+  devIdLabel.setAttribute('data-i18n', 'form.address');
   devIdLabel.htmlFor = `mbox-dev-id-${id}`;
 
   const devIdInput = document.createElement('input');
@@ -199,6 +207,7 @@ function addMboxDeviceRow() {
 
   const zoneLabel = document.createElement('label');
   zoneLabel.textContent = t('form.zone');
+  zoneLabel.setAttribute('data-i18n', 'form.zone');
   zoneLabel.htmlFor = `mbox-zone-${id}`;
 
   const zoneInput = document.createElement('input');
@@ -216,6 +225,7 @@ function addMboxDeviceRow() {
   removeBtn.className = 'btn-remove';
   removeBtn.textContent = '×';
   removeBtn.title = t('form.remove_title');
+  removeBtn.setAttribute('data-i18n-title', 'form.remove_title');
   removeBtn.onclick = () => row.remove();
 
   row.append(select, devIdLabel, devIdInput, zoneField, removeBtn);
@@ -819,6 +829,18 @@ document.getElementById('btn-mbox-calculate').addEventListener('click', calculat
 document.getElementById('btn-add-mbox-device').addEventListener('click', addMboxDeviceRow);
 document.getElementById('btn-lang').addEventListener('click', () => {
   setLang(currentLang === 'pl' ? 'en' : 'pl');
+  applyStaticTranslations();
+
+  // Jeśli wyniki są widoczne — przelicz ponownie (re-render z nowym językiem)
+  const resultsSection = document.getElementById('results');
+  if (resultsSection && resultsSection.style.display !== 'none') {
+    const ctrl = document.getElementById('controllerType').value;
+    if (ctrl === 'mbox') {
+      calculateMbox();
+    } else {
+      calculate();
+    }
+  }
 });
 
 loadDevices();

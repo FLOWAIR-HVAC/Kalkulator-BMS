@@ -189,6 +189,7 @@ function t(key, ...params) {
  * Przeładowanie gwarantuje spójność wszystkich elementów UI.
  */
 function setLang(lang) {
+  currentLang = lang;
   localStorage.setItem('bms_lang', lang);
-  location.reload();
+  // UI aktualizuje wywołujący kod (app.js)
 }
