@@ -843,4 +843,8 @@ document.getElementById('btn-lang').addEventListener('click', () => {
   }
 });
 
+document.getElementById('btn-print').addEventListener('click', () => {
+  window.print();
+});
+
 loadDevices();

@@ -475,3 +475,74 @@ button:hover { background: #f5f7fa; }
 .btn-lang:hover {
   background: rgba(255,255,255,0.25);
 }
+
+/* ============================================================
+   PRINT / PDF
+   ============================================================ */
+@media print {
+
+  /* Ukryj wszystko poza wynikami */
+  header .btn-lang,
+  #form-section,
+  #btn-reset,
+  #btn-print,
+  .btn-toggle-ctrl,
+  .btn-toggle-sys {
+    display: none !important;
+  }
+
+  /* Upewnij się, że sekcja wyników jest widoczna */
+  #results {
+    display: block !important;
+  }
+
+  /* Rozwiń wszystkie ukryte wiersze szczegółów rejestrów */
+  .reg-detail-row {
+    display: table-row !important;
+  }
+
+  /* Ukryj ikonę rozwijania */
+  .reg-expand-icon {
+    display: none !important;
+  }
+
+  /* Marginesy strony */
+  @page {
+    margin: 1.5cm 1.5cm 2cm 1.5cm;
+  }
+
+  /* Unikaj łamania wewnątrz bloków wynikowych */
+  .result-block {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Unikaj łamania wewnątrz wierszy tabeli */
+  tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Drukuj kolory tła (np. nagłówki tabel) */
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Usuń cienie i zaokrąglenia które źle wyglądają na druku */
+  .result-block,
+  table {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  /* Tytuł strony — pogrubiony, widoczny */
+  h1 {
+    font-size: 16pt;
+  }
+
+  /* Tabele — pełna szerokość */
+  table {
+    width: 100%;
+  }
+}
