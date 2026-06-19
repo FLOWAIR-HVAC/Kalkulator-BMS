@@ -852,8 +852,8 @@ function exportToExcel() {
 
   // Nagłówki kolumn (tłumaczone)
   const HDR = currentLang === 'en'
-    ? ['Section', 'Address', 'Zone', 'Type', 'Address HEX', 'Address DEC', 'Register name', 'Description']
-    : ['Sekcja',  'Adres',   'Strefa', 'Typ', 'Adres HEX',  'Adres DEC',   'Nazwa rejestru', 'Opis'];
+    ? ['Section', 'Address', 'Zone / Group', 'Type', 'Address HEX', 'Address DEC', 'Register name', 'Description']
+    : ['Sekcja',  'Adres',   'Strefa / Grupa', 'Typ', 'Adres HEX', 'Adres DEC',   'Nazwa rejestru', 'Opis'];
 
   const rows = [HDR];
 
@@ -865,13 +865,14 @@ function exportToExcel() {
     const h3 = block.querySelector('.result-block-header h3');
     const sectionName = h3 ? h3.textContent.trim() : '';
 
-    // Adres i strefa z badge'a (np. "Adres: 3, Strefa: 2" lub "addr=3")
+    // Adres i strefa/grupa z badge'a — wyciągamy kolejne liczby z tekstu.
+    // Pierwsza liczba = adres Modbus urządzenia.
+    // Druga liczba = strefa (M-box/T-box Zone) lub numer grupy (T-box Group).
     const badge = block.querySelector('.result-block-header .badge');
     const badgeText = badge ? badge.textContent.trim() : '';
-    const addrMatch  = badgeText.match(/(?:Adres|addr)[=:\s]+(\d+)/i);
-    const zoneMatch  = badgeText.match(/(?:Strefa|zone)[=:\s]+(\d+)/i);
-    const deviceAddr = addrMatch ? addrMatch[1] : '';
-    const deviceZone = zoneMatch ? zoneMatch[1] : '';
+    const badgeNumbers = badgeText.match(/\d+/g) || [];
+    const deviceAddr = badgeNumbers[0] || '';
+    const deviceZone = badgeNumbers[1] || '';
 
     // Każda podsekcja IR / HR
     const regSections = block.querySelectorAll('.reg-section');
