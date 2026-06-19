@@ -476,6 +476,15 @@ button:hover { background: #f5f7fa; }
   background: rgba(255,255,255,0.25);
 }
 
+/* ---- Przycisk eksportu Excel ---- */
+#btn-export-xlsx {
+  background: #f0faf4;
+  border-color: #4caf82;
+  color: #1a6b42;
+  font-weight: 600;
+}
+#btn-export-xlsx:hover { background: #d8f3e5; }
+
 /* ============================================================
    PRINT / PDF
    ============================================================ */
@@ -486,6 +495,7 @@ button:hover { background: #f5f7fa; }
   #form-section,
   #btn-reset,
   #btn-print,
+  #btn-export-xlsx,
   .btn-toggle-ctrl,
   .btn-toggle-sys {
     display: none !important;

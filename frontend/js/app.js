@@ -833,4 +833,111 @@ document.getElementById('btn-print').addEventListener('click', () => {
   window.print();
 });
 
+document.getElementById('btn-export-xlsx').addEventListener('click', exportToExcel);
+
 loadDevices();
+
+// ============================================================
+// Eksport do Excel
+// ============================================================
+
+/**
+ * Zbiera aktualnie wyrenderowane wyniki i generuje plik .xlsx.
+ * Kolumny: Sekcja | Typ | Adres HEX | Adres DEC | Nazwa rejestru | Opis
+ * Język opisu zgodny z aktywnym językiem UI (currentLang).
+ */
+function exportToExcel() {
+  const content = document.getElementById('results-content');
+  if (!content) return;
+
+  // Nagłówki kolumn (tłumaczone)
+  const HDR = currentLang === 'en'
+    ? ['Section', 'Type', 'Address HEX', 'Address DEC', 'Register name', 'Description']
+    : ['Sekcja',  'Typ',  'Adres HEX',   'Adres DEC',   'Nazwa rejestru', 'Opis'];
+
+  const rows = [HDR];
+
+  // Iteracja po wszystkich blokach wynikowych
+  const blocks = content.querySelectorAll('.result-block');
+
+  blocks.forEach(block => {
+    // Nazwa sekcji z nagłówka bloku
+    const h3 = block.querySelector('.result-block-header h3');
+    const sectionName = h3 ? h3.textContent.trim() : '';
+
+    // Każda podsekcja IR / HR
+    const regSections = block.querySelectorAll('.reg-section');
+    regSections.forEach(sec => {
+      const titleEl = sec.querySelector('.reg-section-title');
+      const typeLabel = titleEl ? titleEl.textContent.trim() : '';
+      // Skrót: "IR" lub "HR"
+      const typeShort = typeLabel.match(/\bHR\b/) ? 'HR' : 'IR';
+
+      const tbody = sec.querySelector('.reg-table tbody');
+      if (!tbody) return;
+
+      const trs = Array.from(tbody.querySelectorAll('tr'));
+
+      trs.forEach((tr, idx) => {
+        // Pomiń wiersze szczegółów (rozwijane)
+        if (tr.classList.contains('reg-detail-row')) return;
+
+        const tds = tr.querySelectorAll('td');
+        if (tds.length < 4) return;
+
+        const addrHex = tds[1].textContent.trim();
+        const addrDec = tds[2].textContent.trim();
+        const regNameEl = tds[3].querySelector('.reg-name');
+        const name = regNameEl ? regNameEl.textContent.trim() : tds[3].textContent.trim();
+
+        // Opis: szukamy w następnym wierszu .reg-detail-row
+        let description = '';
+        const nextTr = trs[idx + 1];
+        if (nextTr && nextTr.classList.contains('reg-detail-row')) {
+          const cell = nextTr.querySelector('td');
+          if (cell) {
+            // Preferuj .val-desc, potem .values-list, potem cały tekst
+            const descEl  = cell.querySelector('.val-desc');
+            const valList = cell.querySelector('.values-list');
+            if (descEl) {
+              description = descEl.textContent.trim();
+            } else if (valList) {
+              description = Array.from(valList.querySelectorAll('.val-item'))
+                .map(el => el.textContent.trim())
+                .join('; ');
+            } else {
+              description = cell.textContent.trim().replace(/\s+/g, ' ');
+            }
+          }
+        }
+
+        rows.push([sectionName, typeShort, addrHex, addrDec, name, description]);
+      });
+    });
+  });
+
+  if (rows.length <= 1) {
+    alert(currentLang === 'en' ? 'No results to export.' : 'Brak wyników do eksportu.');
+    return;
+  }
+
+  // Utwórz arkusz i skoroszyt (SheetJS)
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+
+  // Szerokości kolumn
+  ws['!cols'] = [
+    { wch: 22 }, // Sekcja
+    { wch: 5  }, // Typ
+    { wch: 13 }, // Adres HEX
+    { wch: 11 }, // Adres DEC
+    { wch: 28 }, // Nazwa rejestru
+    { wch: 55 }, // Opis
+  ];
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, currentLang === 'en' ? 'Registers' : 'Rejestry');
+
+  // Nazwa pliku: modbus_registers_YYYYMMDD.xlsx
+  const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+  XLSX.writeFile(wb, `modbus_registers_${dateStr}.xlsx`);
+}
