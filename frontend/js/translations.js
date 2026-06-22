@@ -87,7 +87,7 @@ const TRANSLATIONS = {
 
     /* Różne */
     'misc.no_regs':    'Brak rejestrów dla tego urządzenia.',
-    'misc.lang_btn':   'EN',
+    'misc.lang_btn':   'PL',
   },
 
   // ===========================================================
@@ -167,7 +167,7 @@ const TRANSLATIONS = {
 
     /* Misc */
     'misc.no_regs':   'No registers for this device.',
-    'misc.lang_btn':  'PL',
+    'misc.lang_btn':  'EN',
   },
 };
 

@@ -470,14 +470,21 @@ button:hover { background: #f5f7fa; }
   border: 1px solid rgba(255,255,255,0.4);
   color: #fff;
   border-radius: 4px;
-  padding: 4px 12px;
+  padding: 4px 10px;
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   letter-spacing: 0.5px;
+  appearance: none;
+  -webkit-appearance: none;
 }
-.btn-lang:hover {
+.btn-lang:hover, .btn-lang:focus {
   background: rgba(255,255,255,0.25);
+  outline: none;
+}
+.btn-lang option {
+  background: #1a2d47;
+  color: #fff;
 }
 
 /* ---- Przycisk eksportu Excel ---- */

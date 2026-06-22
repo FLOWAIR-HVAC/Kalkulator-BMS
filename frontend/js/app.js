@@ -18,11 +18,14 @@ function applyStaticTranslations() {
   document.querySelectorAll('[data-i18n-tip]').forEach(el => {
     el.setAttribute('data-tip', t(el.getAttribute('data-i18n-tip')));
   });
+  // Elementy z data-i18n-title — aktualizuj atrybut title
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    el.setAttribute('title', t(el.getAttribute('data-i18n-title')));
+  });
   // Tytuł strony
   document.title = t('page.title');
-  // Przycisk języka — pokazuje kod języka do przełączenia
   const btnLang = document.getElementById('btn-lang');
-  if (btnLang) btnLang.textContent = t('misc.lang_btn');
+  if (btnLang && btnLang.tagName === 'SELECT') btnLang.value = currentLang;
   // Atrybut lang na <html>
   document.documentElement.lang = currentLang;
 }
@@ -120,6 +123,7 @@ function addDeviceRow() {
 
   const addrLabel = document.createElement('label');
   addrLabel.textContent = t('form.address');
+  addrLabel.setAttribute('data-i18n', 'form.address');
   addrLabel.htmlFor = `addr-${id}`;
 
   const addrInput = document.createElement('input');
@@ -136,6 +140,7 @@ function addDeviceRow() {
 
   const zoneLabel = document.createElement('label');
   zoneLabel.textContent = t('form.zone');
+  zoneLabel.setAttribute('data-i18n', 'form.zone');
   zoneLabel.htmlFor = `zone-${id}`;
 
   const zoneInput = document.createElement('input');
@@ -152,6 +157,7 @@ function addDeviceRow() {
   removeBtn.className = 'btn-remove';
   removeBtn.textContent = '×';
   removeBtn.title = t('form.remove_title');
+  removeBtn.setAttribute('data-i18n-title', 'form.remove_title');
   removeBtn.onclick = () => row.remove();
 
   row.append(select, addrLabel, addrInput, zoneField, removeBtn);
@@ -182,6 +188,7 @@ function addMboxDeviceRow() {
   // DeviceID
   const devIdLabel = document.createElement('label');
   devIdLabel.textContent = t('form.address');
+  devIdLabel.setAttribute('data-i18n', 'form.address');
   devIdLabel.htmlFor = `mbox-dev-id-${id}`;
 
   const devIdInput = document.createElement('input');
@@ -199,6 +206,7 @@ function addMboxDeviceRow() {
 
   const zoneLabel = document.createElement('label');
   zoneLabel.textContent = t('form.zone');
+  zoneLabel.setAttribute('data-i18n', 'form.zone');
   zoneLabel.htmlFor = `mbox-zone-${id}`;
 
   const zoneInput = document.createElement('input');
@@ -481,17 +489,8 @@ function renderTboxZone(resultsEl, selectedDevices) {
 function buildControllerSection(controllerType, mode) {
   const ctrl = Calculator.CONTROLLER[controllerType];
 
-  const wrapper = document.createElement('div');
-  wrapper.className = 'controller-section';
-
-  const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.className = 'btn-controller-toggle';
-  btn.textContent = t('btn.show_ctrl');
-
   const body = document.createElement('div');
   body.className = 'result-block controller-block';
-  body.style.display = 'none';
 
   const blockHeader = document.createElement('div');
   blockHeader.className = 'result-block-header controller-block-header';
@@ -523,14 +522,7 @@ function buildControllerSection(controllerType, mode) {
   }));
   body.appendChild(buildRegSection(t('section.hr'), hrRows));
 
-  btn.addEventListener('click', () => {
-    const isOpen = body.style.display !== 'none';
-    body.style.display = isOpen ? 'none' : 'block';
-    btn.textContent = isOpen ? t('btn.show_ctrl') : t('btn.hide_ctrl');
-  });
-
-  wrapper.append(btn, body);
-  return wrapper;
+  return body;
 }
 
 // ============================================================
@@ -697,18 +689,9 @@ function calculateMbox() {
   const resultsEl = document.getElementById('results-content');
   resultsEl.innerHTML = '';
 
-  // ---- Sekcja: Rejestry systemowe — domyślnie ukryta, jak buildControllerSection ----
-  const sysSection = document.createElement('div');
-  sysSection.className = 'controller-section';
-
-  const sysBtn = document.createElement('button');
-  sysBtn.type = 'button';
-  sysBtn.className = 'btn-controller-toggle';
-  sysBtn.textContent = t('btn.show_sys');
-
+  // ---- Sekcja: Rejestry systemowe — zawsze widoczna ----
   const sysWrapper = document.createElement('div');
   sysWrapper.className = 'result-block controller-block';
-  sysWrapper.style.display = 'none';
   sysWrapper.innerHTML = `
     <div class="result-block-header controller-block-header">
       <h3>${t('block.sys')}</h3>
@@ -729,15 +712,7 @@ function calculateMbox() {
   }));
   sysWrapper.appendChild(buildRegSection(t('section.ir'), sysIrRows));
   sysWrapper.appendChild(buildRegSection(t('section.hr_rw'), sysHrRows));
-
-  sysBtn.addEventListener('click', () => {
-    const isOpen = sysWrapper.style.display !== 'none';
-    sysWrapper.style.display = isOpen ? 'none' : 'block';
-    sysBtn.textContent = isOpen ? t('btn.show_sys') : t('btn.hide_sys');
-  });
-
-  sysSection.append(sysBtn, sysWrapper);
-  resultsEl.appendChild(sysSection);
+  resultsEl.appendChild(sysWrapper);
 
   // ---- Sekcje urządzeń — po jednej na każdy wiersz ----
   const processedZones = new Set();
@@ -817,8 +792,8 @@ document.getElementById('btn-calculate').addEventListener('click', calculate);
 document.getElementById('btn-reset').addEventListener('click', resetForm);
 document.getElementById('btn-mbox-calculate').addEventListener('click', calculateMbox);
 document.getElementById('btn-add-mbox-device').addEventListener('click', addMboxDeviceRow);
-document.getElementById('btn-lang').addEventListener('click', () => {
-  setLang(currentLang === 'pl' ? 'en' : 'pl');
+document.getElementById('btn-lang').addEventListener('change', (e) => {
+  setLang(e.target.value);
   applyStaticTranslations();
   // Jeśli wyniki są widoczne — przelicz ponownie (re-render z nowym językiem)
   const resultsSection = document.getElementById('results');
