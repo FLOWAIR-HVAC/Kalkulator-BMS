@@ -844,6 +844,9 @@ document.getElementById('btn-add-mbox-device').addEventListener('click', addMbox
 document.getElementById('btn-hmi-calculate').addEventListener('click', calculate);
 document.querySelectorAll('.lang-btn').forEach(btn => {
   btn.addEventListener('click', () => {
+    // Zapamiętaj pozycję przewijania przed re-renderem
+    const scrollY = window.scrollY;
+
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     setLang(btn.dataset.lang);
@@ -855,6 +858,9 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
       if (ctrl === 'mbox') calculateMbox();
       else calculate();
     }
+
+    // Przywróć pozycję przewijania po re-renderze
+    window.scrollTo({ top: scrollY, behavior: 'instant' });
   });
 });
 

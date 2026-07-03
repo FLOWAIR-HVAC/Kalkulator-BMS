@@ -35,21 +35,6 @@ header {
   gap: 8px;
 }
 
-.flowair-logo-text .brand {
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: #000;
-  display: block;
-}
-
-.flowair-logo-text .tagline {
-  font-size: 9px;
-  font-weight: 300;
-  color: #878787;
-  letter-spacing: 0.5px;
-  display: block;
-}
 
 .header-title {
   border-left: 1px solid #e0e0e0;
@@ -76,8 +61,8 @@ header p  { font-size: 10px; color: #878787; margin-top: 1px; font-weight: 300; 
   color: #000;
   border: none;
   border-right: 1px solid #aaa;
-  padding: 2px 7px;
-  font-size: 11px;
+  padding: 4px 14px;
+  font-size: 14px;
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
