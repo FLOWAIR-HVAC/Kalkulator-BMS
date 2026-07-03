@@ -69,6 +69,10 @@ function updateFormForControllerType() {
     el.style.display = isTboxZone ? 'flex' : 'none';
   });
 
+  // Etykieta "Urządzenia" — ukryta gdy brak listy urządzeń w formularzu
+  const devHeader = document.querySelector('.devices-header');
+  if (devHeader) devHeader.style.display = isHmiWifi ? 'none' : '';
+
   // Sekcja urządzeń T-box
   document.getElementById('devices-container').style.display = (isMbox || isHmiWifi) ? 'none' : '';
 
