@@ -706,6 +706,8 @@ button:hover { background: #e8e8e8; }
 
 .tut-body-top {
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   gap: 20px;
   align-items: flex-start;
   margin-bottom: 6px;
