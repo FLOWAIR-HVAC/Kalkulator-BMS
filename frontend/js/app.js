@@ -160,9 +160,13 @@ const TUTORIAL_DATA = {
       name: 'Cube (bezpośrednio)',
       desc: 'Sterownik Cube podłączony bezpośrednio do systemu BMS. Obsługuje trzy protokoły komunikacyjne — wybierz odpowiedni przycisk poniżej, aby wyświetlić mapę rejestrów.',
       params: [
-        ['Modbus RTU',  'RS485'],
-        ['Modbus TCP',  'Ethernet'],
-        ['BACnet IP',   'Ethernet'],
+        ['Modbus RTU',          'RS485'],
+        ['Adres ID',            '1–247 (domyślnie: 5)'],
+        ['Prędkość transmisji', '600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200 (domyślnie: 38400)'],
+        ['Parzystość',          'None, Odd, Even (domyślnie: Even)'],
+        ['Bity stopu',          '1, 2 (domyślnie: 2)'],
+        ['Modbus TCP',          'Ethernet'],
+        ['BACnet IP',           'Ethernet'],
       ],
       modes: [],
     },
@@ -170,9 +174,13 @@ const TUTORIAL_DATA = {
       name: 'Cube (direct)',
       desc: 'Cube controller connected directly to the BMS. Supports three communication protocols — select the appropriate button below to view the register map.',
       params: [
-        ['Modbus RTU',  'RS485'],
-        ['Modbus TCP',  'Ethernet'],
-        ['BACnet IP',   'Ethernet'],
+        ['Modbus RTU',   'RS485'],
+        ['ID (address)', '1–247 (default: 5)'],
+        ['Speed data',   '600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200 (default: 38400)'],
+        ['Parity',       'None, Odd, Even (default: Even)'],
+        ['Stop bits',    '1, 2 (default: 2)'],
+        ['Modbus TCP',   'Ethernet'],
+        ['BACnet IP',    'Ethernet'],
       ],
       modes: [],
     },
@@ -481,7 +489,7 @@ function updateFormForControllerType() {
     if (drvSel) {
       const current = drvSel.value;
       const names = Object.keys(devices)
-        .filter(name => !devices[name].tbox_zone_only)
+        .filter(name => !devices[name].tbox_zone_only && !name.includes('CUBE'))
         .sort();
       drvSel.innerHTML = names.map(n =>
         `<option value="${n}"${n === current ? ' selected' : ''}>${n}</option>`
