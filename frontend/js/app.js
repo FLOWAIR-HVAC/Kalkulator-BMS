@@ -261,8 +261,8 @@ function buildTutorialDiagram(type) {
       : `<tspan x="92" dy="11" font-size="6.5" fill="#1a5a6a">Single/Group</tspan>`;
     return `<svg viewBox="0 0 200 120" width="200" height="120" xmlns="http://www.w3.org/2000/svg">
       <rect x="1" y="41" width="44" height="34" fill="#f7fbfc" stroke="#afd2db" stroke-width="1"/>
-      <text x="23" y="58" text-anchor="middle" dominant-baseline="middle" font-size="7" font-family="Poppins,sans-serif" fill="#000" font-weight="600">BMS MASTER</text>
-      <text x="23" y="69" text-anchor="middle" font-size="6.5" font-family="Poppins,sans-serif" fill="#878787">RS485</text>
+      <text text-anchor="middle" font-family="Poppins,sans-serif" fill="#000" font-weight="600"><tspan x="23" y="49" font-size="8">BMS</tspan><tspan x="23" dy="11" font-size="8">MASTER</tspan></text>
+      <text x="23" y="71" text-anchor="middle" font-size="6.5" font-family="Poppins,sans-serif" fill="#878787">RS485</text>
       <line x1="45" y1="58" x2="65" y2="58" stroke="#afd2db" stroke-width="1.2" stroke-dasharray="4,2"/>
       <rect x="65" y="40" width="54" height="36" fill="#afd2db" stroke="#7abfcc" stroke-width="1"/>
       <text text-anchor="middle" font-family="Poppins,sans-serif" fill="#0d3d4a">
@@ -283,8 +283,8 @@ function buildTutorialDiagram(type) {
   if (type === 'mbox') {
     return `<svg viewBox="0 0 200 120" width="200" height="120" xmlns="http://www.w3.org/2000/svg">
       <rect x="1" y="38" width="44" height="42" fill="#f7fbfc" stroke="#afd2db" stroke-width="1"/>
-      <text x="23" y="59" text-anchor="middle" dominant-baseline="middle" font-size="7" font-family="Poppins,sans-serif" fill="#000" font-weight="600">BMS MASTER</text>
-      <text x="23" y="70" text-anchor="middle" font-size="6.5" font-family="Poppins,sans-serif" fill="#878787">Modbus TCP</text>
+      <text text-anchor="middle" font-family="Poppins,sans-serif" fill="#000" font-weight="600"><tspan x="23" y="51" font-size="8">BMS</tspan><tspan x="23" dy="11" font-size="8">MASTER</tspan></text>
+      <text x="23" y="72" text-anchor="middle" font-size="6.5" font-family="Poppins,sans-serif" fill="#878787">Modbus TCP</text>
       <line x1="45" y1="59" x2="65" y2="59" stroke="#a3c1a3" stroke-width="1.2" stroke-dasharray="4,2"/>
       <rect x="65" y="40" width="50" height="36" fill="#afd2db" stroke="#7abfcc" stroke-width="1"/>
       <text x="90" y="58" text-anchor="middle" dominant-baseline="middle" font-size="9" font-family="Poppins,sans-serif" fill="#0d3d4a" font-weight="600">M-box</text>
@@ -303,7 +303,7 @@ function buildTutorialDiagram(type) {
   if (type === 'cube_direct') {
     return `<svg viewBox="0 0 200 120" width="200" height="120" xmlns="http://www.w3.org/2000/svg">
       <rect x="1" y="38" width="44" height="44" fill="#f7fbfc" stroke="#afd2db" stroke-width="1"/>
-      <text x="23" y="57" text-anchor="middle" dominant-baseline="middle" font-size="7" font-family="Poppins,sans-serif" fill="#000" font-weight="600">BMS MASTER</text>
+      <text text-anchor="middle" font-family="Poppins,sans-serif" fill="#000" font-weight="600"><tspan x="23" y="47" font-size="8">BMS</tspan><tspan x="23" dy="10" font-size="8">MASTER</tspan></text>
       <text x="23" y="69" text-anchor="middle" font-size="6" font-family="Poppins,sans-serif" fill="#878787">RTU/TCP/</text>
       <text x="23" y="77" text-anchor="middle" font-size="6" font-family="Poppins,sans-serif" fill="#878787">BACnet</text>
       <line x1="45" y1="60" x2="80" y2="60" stroke="#afd2db" stroke-width="1.2" stroke-dasharray="4,2"/>
@@ -318,8 +318,8 @@ function buildTutorialDiagram(type) {
   if (type === 'drv') {
     return `<svg viewBox="0 0 200 100" width="200" height="100" xmlns="http://www.w3.org/2000/svg">
       <rect x="5" y="33" width="50" height="34" fill="#f7fbfc" stroke="#afd2db" stroke-width="1"/>
-      <text x="30" y="50" text-anchor="middle" dominant-baseline="middle" font-size="7" font-family="Poppins,sans-serif" fill="#000" font-weight="600">BMS MASTER</text>
-      <text x="30" y="62" text-anchor="middle" font-size="6.5" font-family="Poppins,sans-serif" fill="#878787">RS485</text>
+      <text text-anchor="middle" font-family="Poppins,sans-serif" fill="#000" font-weight="600"><tspan x="30" y="42" font-size="8">BMS</tspan><tspan x="30" dy="11" font-size="8">MASTER</tspan></text>
+      <text x="30" y="63" text-anchor="middle" font-size="6.5" font-family="Poppins,sans-serif" fill="#878787">RS485</text>
       <line x1="55" y1="50" x2="80" y2="50" stroke="#afd2db" stroke-width="1.2" stroke-dasharray="4,2"/>
       <rect x="80" y="28" width="110" height="44" fill="#afd2db" stroke="#7abfcc" stroke-width="1"/>
       <text text-anchor="middle" font-family="Poppins,sans-serif" fill="#0d3d4a">
@@ -333,8 +333,8 @@ function buildTutorialDiagram(type) {
   const tp = type === 'hmi_wifi_ac' ? 'AC' : 'EC';
   return `<svg viewBox="0 0 200 100" width="200" height="100" xmlns="http://www.w3.org/2000/svg">
     <rect x="5" y="33" width="50" height="34" fill="#f7fbfc" stroke="#afd2db" stroke-width="1"/>
-    <text x="30" y="50" text-anchor="middle" dominant-baseline="middle" font-size="7" font-family="Poppins,sans-serif" fill="#000" font-weight="600">BMS MASTER</text>
-    <text x="30" y="62" text-anchor="middle" font-size="6.5" font-family="Poppins,sans-serif" fill="#878787">RS485</text>
+    <text text-anchor="middle" font-family="Poppins,sans-serif" fill="#000" font-weight="600"><tspan x="30" y="42" font-size="8">BMS</tspan><tspan x="30" dy="11" font-size="8">MASTER</tspan></text>
+    <text x="30" y="63" text-anchor="middle" font-size="6.5" font-family="Poppins,sans-serif" fill="#878787">RS485</text>
     <line x1="55" y1="50" x2="80" y2="50" stroke="#afd2db" stroke-width="1.2" stroke-dasharray="4,2"/>
     <rect x="80" y="28" width="110" height="44" fill="#afd2db" stroke="#7abfcc" stroke-width="1"/>
     <text text-anchor="middle" font-family="Poppins,sans-serif" fill="#0d3d4a">
