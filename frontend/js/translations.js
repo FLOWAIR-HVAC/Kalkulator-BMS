@@ -33,6 +33,7 @@ const TRANSLATIONS = {
     /* Przyciski */
     'btn.add_device':  '+ Dodaj urządzenie',
     'btn.calculate':   'Oblicz',
+    'btn.back':        '← Wstecz',
     'btn.reset':       'Nowe obliczenie',
     'btn.print':       'Drukuj',
     'btn.export_xlsx': 'Eksportuj Excel',
@@ -120,6 +121,7 @@ const TRANSLATIONS = {
     /* Buttons */
     'btn.add_device':  '+ Add device',
     'btn.calculate':   'Calculate',
+    'btn.back':        '← Back',
     'btn.reset':       'New calculation',
     'btn.print':       'Print',
     'btn.export_xlsx': 'Export Excel',

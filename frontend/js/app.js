@@ -1836,6 +1836,7 @@ function calculateMbox() {
 document.getElementById('controllerType').addEventListener('change', updateFormForControllerType);
 document.getElementById('btn-add-device').addEventListener('click', addDeviceRow);
 document.getElementById('btn-calculate').addEventListener('click', calculate);
+document.getElementById('btn-back').addEventListener('click', backToForm);
 document.getElementById('btn-reset').addEventListener('click', resetForm);
 
 // Kliknięcie w logo — powrót do formularza bez resetowania ustawień

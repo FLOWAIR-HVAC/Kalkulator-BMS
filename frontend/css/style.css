@@ -285,8 +285,9 @@ button:hover { background: #e8e8e8; }
 
 /* ---- Results section ---- */
 .results-header {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
   align-items: center;
   margin-bottom: 16px;
 }
@@ -294,8 +295,7 @@ button:hover { background: #e8e8e8; }
   font-size: 14px;
   font-weight: 600;
   color: #000;
-  border-left: 4px solid #afd2db;
-  padding-left: 10px;
+  text-align: center;
 }
 .results-actions-right {
   display: flex;
