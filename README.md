@@ -4,7 +4,7 @@
 
 Built for BMS integrators configuring SCADA software, Modbus masters, and BACnet gateways with Flowair heating and ventilation equipment. Instead of manually computing addresses from formulas scattered across device documentation, an integrator selects a controller type and device, and gets a ready-to-use register map.
 
-🔗 **[Live demo → orfiel004.github.io/kalkulator-bms](https://orfiel004.github.io/kalkulator-bms)**
+🔗 **[Live demo → flowair-hvac.github.io/Kalkulator-BMS](https://flowair-hvac.github.io/Kalkulator-BMS)**
 
 ---
 
