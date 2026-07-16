@@ -1,0 +1,20 @@
+name: Deploy to FTP
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Deploy frontend/ to FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: flowair.home.pl
+          username: kalkulatorbms@flowair.pl
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./frontend/
+          server-dir: /
